@@ -1,7 +1,4 @@
 import React from 'react'
-// import algoliasearch from 'algoliasearch/lite'; 
-// import { InstantSearch } from 'react-instantsearch';
-// import { RefinementList } from './RefinementList';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -10,12 +7,14 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
 import artworks from '../data/Listartworks.json';
+import Badge from '@mui/material/Badge';
 import '../styles/Header.css';
 
-const Header = () => {
+const Header = ({ badgeCount }) => {
     console.log('first')
     const location = useLocation();
     const shouldShowHeader = !['/login', '/signup'].includes(location.pathname);
+    /* const [count, setCount] = React.useState(0);*/
 
 
     return shouldShowHeader ? (
@@ -48,18 +47,20 @@ const Header = () => {
                         )}
                     />
                 </Stack>
-
-
-
             </div>
-
             <div className='info'>
                 <button className='btn-nofi' ><TuneIcon /></button>
-                <Link to={"/cart"}><button className='btn-chat'><ShoppingBagIcon /></button></Link>
+                <Link to={"/cart"}>
+                    <button className='btn-chat'>
+                        <Badge color="error" badgeContent={badgeCount} max={99}>
+                            <ShoppingBagIcon />
+                        </Badge>
+                    </button>
+                </Link>
                 <Link to={"/login"}><button className='login'>Login</button></Link>
             </div>
         </div>
-
     ) : null;
 };
 export default Header;
+

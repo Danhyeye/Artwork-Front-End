@@ -7,16 +7,15 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
+// import Header from './Header';
 import '../styles/Artwork.css';
 
 
 
 
-const Artwork = () => {
+const Artwork = ({ onLoyaltyIconClick }) => {
     const { id } = useParams();
     const thisArtwork = artworks.find((art) => String(art.id) === id);
-
-
 
     return (
         <>
@@ -28,7 +27,7 @@ const Artwork = () => {
                 )}
                 <div className='pin-title'>
                     <div className='pin-button'>
-                        <LoyaltyIcon sx={{ fontSize: 30, m: 2, cursor: 'pointer' }} />
+                        <LoyaltyIcon sx={{ fontSize: 30, m: 2, cursor: 'pointer' }} onClick={onLoyaltyIconClick} />
                         <MoreHorizIcon sx={{ fontSize: 30, m: 2, cursor: 'pointer' }} />
                         <div className='price' >{thisArtwork.price}</div>
                         <button className='save-button'>Save</button>
