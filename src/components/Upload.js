@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import artworks from '../data/Listartworks.json';
+import artworks from '../data/Listartworks';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';

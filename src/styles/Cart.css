@@ -48,7 +48,9 @@
 }
 
 .image-artwork img {
-  width: 50%;
+  width: 120px;
+  /* position: relative; */
+  /* right: 50px; */
   /* width: 20%; */
   /* height: 100%; */
   /* font-size: 20px; */

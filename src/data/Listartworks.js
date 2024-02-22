@@ -1,65 +1,84 @@
-[
+const products = [
   {
     "id": 0,
     "src": "assets/images/img0.jpg",
-    "price": "40$",
+    "title": "Danhyeye",
+    "price": "20$",
     "artist": "Danhyeye",
-    "topic": "Anime"
+    "topic": "Anime",
+    "description": "This is artwork!!!"
   },
   {
     "id": 1,
     "src": "assets/images/img1.jpg",
+    "title": "Danhyeye",
     "price": "40$",
-    "artist": "Danhyeye",
-    "topic": "Art"
+    "artist": "aCat",
+    "topic": "Art",
+    "description": "This is artwork!!!"
   },
   {
     "id": 2,
     "src": "assets/images/img2.jpg",
+    "title": "Danhyeye",
     "price": "40$",
     "artist": "Danhyeye",
-    "topic": "Animal"
+    "topic": "Animal",
+    "description": "This is artwork!!!"
   },
   {
     "id": 3,
     "src": "assets/images/img3.jpg",
+    "title": "Danhyeye",
     "price": "40$",
     "artist": "Danhyeye",
-    "topic": "Photography"
+    "topic": "Photography",
+    "description": "This is artwork!!!"
   },
   {
     "id": 4,
     "src": "assets/images/img4.jpg",
+    "title": "Danhyeye",
     "price": "40$",
     "artist": "Danhyeye",
-    "topic": "Flower"
+    "topic": "Flower",
+    "description": "This is artwork!!!"
   },
   {
     "id": 5,
     "src": "assets/images/img5.jpg",
+    "title": "Danhyeye",
     "price": "40$",
     "artist": "Danhyeye",
-    "topic": "Painting"
+    "topic": "Painting",
+    "description": "This is artwork!!!"
   },
   {
     "id": 6,
     "src": "assets/images/img6.jpg",
+    "title": "Danhyeye",
     "price": "40$",
     "artist": "Danhyeye",
-    "topic": "Football"
+    "topic": "Football",
+    "description": "This is artwork!!!"
   },
   {
     "id": 7,
     "src": "assets/images/img7.jpg",
+    "title": "Danhyeye",
     "price": "40$",
     "artist": "Danhyeye",
-    "topic": "Street Art"
+    "topic": "Street Art",
+    "description": "This is artwork!!!"
   },
   {
     "id": 8,
     "src": "assets/images/img8.jpg",
+    "title": "Danhyeye",
     "price": "40$",
     "artist": "Danhyeye",
-    "topic": "Fashion"
+    "topic": "Fashion",
+    "description": "This is artwork!!!"
   }
 ]
+module.exports = products

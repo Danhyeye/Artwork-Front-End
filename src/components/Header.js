@@ -6,8 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
-import artworks from '../data/Listartworks.json';
-import Badge from '@mui/material/Badge';
+import artworks from '../data/Listartworks';
 import '../styles/Header.css';
 
 const Header = ({ badgeCount }) => {
@@ -52,9 +51,9 @@ const Header = ({ badgeCount }) => {
                 <button className='btn-nofi' ><TuneIcon /></button>
                 <Link to={"/cart"}>
                     <button className='btn-chat'>
-                        <Badge color="error" badgeContent={badgeCount} max={99}>
-                            <ShoppingBagIcon />
-                        </Badge>
+                        {/* <Badge color="error" badgeCount={badgeCount} max={99} sx={{ m: 0 }}> */}
+                        <ShoppingBagIcon />
+                        {/* </Badge> */}
                     </button>
                 </Link>
                 <Link to={"/login"}><button className='login'>Login</button></Link>

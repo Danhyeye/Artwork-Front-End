@@ -32,6 +32,11 @@
   cursor: context-menu;
 }
 
+.topic {
+  margin: 16px;
+  margin-top: 25px;
+}
+
 .pin-button .save-button {
   position: relative;
   font-size: 20px;
@@ -70,6 +75,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  border-top: 0.1px solid #bdbdbd;
 }
 
 .user .artist {
@@ -100,6 +106,24 @@
   font-style: normal;
   cursor: pointer;
   border: 0;
+}
+
+.content {
+  border-top: 0.1px solid #bdbdbd;
+  border-bottom: 0.1px solid #bdbdbd;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.text-description {
+  margin: 16px;
+  font-size: 20px;
+}
+
+.description {
+  margin: 16px;
+  margin-left: 50px;
+  font-size: 15px;
 }
 
 .text-comment {
