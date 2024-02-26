@@ -171,10 +171,11 @@
 
 .ur-comment {
   position: sticky;
-  top: 200px;
+  top: 400px;
   z-index: 3;
   background-color: #ffffff;
   border-top: 1px solid #efefef;
+  /* margin-top: 20px; */
 }
 
 .react {

@@ -13,9 +13,6 @@ import Upload from './components/Upload';
 import Cart from './components/Cart';
 
 // import artworks from '../data/Listartworks.json';
-
-
-
 // import { Container } from '@mui/material';
 // import Profile from './components/Profile';
 

@@ -1,4 +1,4 @@
-const products = [
+const artworks = [
   {
     "id": 0,
     "src": "assets/images/img0.jpg",
@@ -79,6 +79,53 @@ const products = [
     "artist": "Danhyeye",
     "topic": "Fashion",
     "description": "This is artwork!!!"
-  }
+  },
+  {
+    "id": 9,
+    "src": "assets/images/img9.jpg",
+    "title": "Danhyeye",
+    "price": "40$",
+    "artist": "Danhyeye",
+    "topic": "Fashion",
+    "description": "This is artwork!!!"
+  },
+  {
+    "id": 10,
+    "src": "assets/images/img10.png",
+    "title": "Danhyeye",
+    "price": "40$",
+    "artist": "Danhyeye",
+    "topic": "Fashion",
+    "description": "This is artwork!!!"
+  },
+  {
+    "id": 11,
+    "src": "assets/images/img11.jfif",
+    "title": "Danhyeye",
+    "price": "40$",
+    "artist": "Danhyeye",
+    "topic": "Fashion",
+    "description": "This is artwork!!!"
+  },
+  {
+    "id": 12,
+    "src": "assets/images/img12.jpg",
+    "title": "Danhyeye",
+    "price": "40$",
+    "artist": "Danhyeye",
+    "topic": "Fashion",
+    "description": "This is artwork!!!"
+  },
+  {
+    "id": 13,
+    "src": "assets/images/img13.jpg",
+    "title": "Danhyeye",
+    "price": "40$",
+    "artist": "Danhyeye",
+    "topic": "Fashion",
+    "description": "This is artwork!!!"
+  },
+
 ]
-module.exports = products
+
+module.exports = artworks
