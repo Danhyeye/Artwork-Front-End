@@ -1,5 +1,4 @@
 import React from 'react'
-// import products from '../data/Listartworks';
 import '../styles/Cart.css';
 import { Avatar } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -11,8 +10,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const Cart = () => {
-    // const { id } = useParams();
-    // const products = artworks.find((art) => String(art.id) === id);
+    const { id } = useParams();
+    const products = artworks.find((art) => String(art.id) === id);
 
 
     return (

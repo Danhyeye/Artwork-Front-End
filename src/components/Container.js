@@ -1,10 +1,9 @@
 import React from 'react'
 import '../styles/Container.css';
-// import { useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Link } from 'react-router-dom';
-import artworks from '../data/Listartworks';
+import artworks from "../data/Listartworks.js"
 import { useDispatch } from "react-redux";
 import { deleteArtwork } from "../features/UploadImage.js";
 

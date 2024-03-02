@@ -6,14 +6,13 @@ import { Link, useLocation } from "react-router-dom";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
-import artworks from '../data/Listartworks';
+import artworks from "../data/Listartworks"
 import '../styles/Header.css';
 
 const Header = ({ badgeCount }) => {
     console.log('first')
     const location = useLocation();
     const shouldShowHeader = !['/login', '/signup'].includes(location.pathname);
-    /* const [count, setCount] = React.useState(0);*/
 
 
     return shouldShowHeader ? (
@@ -51,9 +50,7 @@ const Header = ({ badgeCount }) => {
                 <button className='btn-nofi' ><TuneIcon /></button>
                 <Link to={"/cart"}>
                     <button className='btn-chat'>
-                        {/* <Badge color="error" badgeCount={badgeCount} max={99} sx={{ m: 0 }}> */}
                         <ShoppingBagIcon />
-                        {/* </Badge> */}
                     </button>
                 </Link>
                 <Link to={"/login"}><button className='login'>Login</button></Link>
