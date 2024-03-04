@@ -1,6 +1,8 @@
+
+
 const artworks = [
   {
-    "id": 0,
+    "id": "0",
     "src": "assets/images/img0.jpg",
     "title": "Danhyeye",
     "price": "20$",
@@ -9,7 +11,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 1,
+    "id": "1",
     "src": "assets/images/img1.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -18,7 +20,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 2,
+    "id": "2",
     "src": "assets/images/img2.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -27,7 +29,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 3,
+    "id": "3",
     "src": "assets/images/img3.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -36,7 +38,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 4,
+    "id": "4",
     "src": "assets/images/img4.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -45,7 +47,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 5,
+    "id": "5",
     "src": "assets/images/img5.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -54,7 +56,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 6,
+    "id": "6",
     "src": "assets/images/img6.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -63,7 +65,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 7,
+    "id": "7",
     "src": "assets/images/img7.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -72,7 +74,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 8,
+    "id": "8",
     "src": "assets/images/img8.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -81,7 +83,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 9,
+    "id": "9",
     "src": "assets/images/img9.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -90,7 +92,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 10,
+    "id": "10",
     "src": "assets/images/img10.png",
     "title": "Danhyeye",
     "price": "40$",
@@ -99,7 +101,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 11,
+    "id": "11",
     "src": "assets/images/img11.jfif",
     "title": "Danhyeye",
     "price": "40$",
@@ -108,7 +110,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 12,
+    "id": "12",
     "src": "assets/images/img12.jpg",
     "title": "Danhyeye",
     "price": "40$",
@@ -117,7 +119,7 @@ const artworks = [
     "description": "This is artwork!!!"
   },
   {
-    "id": 13,
+    "id": "13",
     "src": "assets/images/img13.jpg",
     "title": "Danhyeye",
     "price": "40$",

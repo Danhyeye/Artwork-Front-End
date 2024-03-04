@@ -11,6 +11,8 @@ import Container from './components/Container';
 import Artwork from './components/Artwork'
 import Upload from './components/Upload';
 import Cart from './components/Cart';
+import {Provider} from "react-redux";
+import store from "./features/store";
 
 // import artworks from '../data/Listartworks.json';
 // import { Container } from '@mui/material';
@@ -18,32 +20,20 @@ import Cart from './components/Cart';
 
 const App = () => {
   return (
-    <>
+    <Provider store={store}>
       <Router>
         <Header />
-
         <Routes>
+          <Route path='/' element={<Container />} />
           <Route path='/home' element={<Container />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/artwork/:id' element={<><Artwork /> <Container /></>} />
           <Route path='/upload' element={<Upload />} />
           <Route path='/cart' element={<Cart />} />
-
-
-
-
-
-
-
-
-
-
-
-
         </Routes>
       </Router>
-    </>
+    </Provider>
   );
 };
 

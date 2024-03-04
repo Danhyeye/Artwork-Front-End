@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
@@ -8,24 +8,32 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import artworks from "../data/Listartworks"
 import "../styles/Artwork.css";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useSelector, useDispatch } from "react-redux";
-import {
-    addComment,
-    deleteComment,
-    updateComment,
-} from "../features/FeaturesComment";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment, deleteComment, updateComment, } from "../features/FeaturesComment";
+import { addToCart } from "../features/carts/CartsSlice";
+import { ArtworksService } from "../services/ArtworksService";
+import { CartsThunk } from "../features/carts/CartsThunk";
+import { ArtworksThunk } from "../features/artworks/ArtworksThunk";
+import { deleteArtwork } from "../features/artworks/ArtworksSlice";
 
 const Artwork = () => {
     const { id } = useParams();
-    const thisArtwork = artworks.find((artwork) => String(artwork.id) === id);
+    const [thisArtwork, setThisArtwork] = useState(artworks.find((artwork) => String(artwork.id) === id));
+
+    useEffect(() => {
+        (async () => {
+            await ArtworksService.getArtwork(id).then((art) => {
+                if (art.id !== undefined)
+                    setThisArtwork(art)
+            });
+        })();
+    }, []);
+
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const ITEM_HEIGHT = 48;
     const open = Boolean(anchorEl);
-    const comments = useSelector((state) => state.comments.value);
+    const comments = useSelector((state) => state.comments?.value || []);
     const dispatch = useDispatch();
     const [myComments, setMyComments] = useState("");
     const [selectedComment, setSelectedComment] = useState({});
@@ -49,6 +57,13 @@ const Artwork = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleAddToCart = async (artwork) => {
+        console.log("add to cart", artwork)
+        dispatch(CartsThunk.addCart(artwork))
+            .then(() => dispatch(addToCart(artwork)))
+    }
+
     return (
         <>
             <main className="pin-container">
@@ -59,9 +74,17 @@ const Artwork = () => {
                 )}
                 <div className="pin-title">
                     <div className="pin-button">
-                        <LoyaltyIcon sx={{ fontSize: 30, m: 2, cursor: "pointer" }} />
-                        <MoreHorizIcon sx={{ fontSize: 30, m: 2, cursor: "pointer" }} />
-                        <div className="price">{thisArtwork.price}</div>
+                        <LoyaltyIcon sx={{ fontSize: 30, m: 2, cursor: "pointer" }}
+                            onClick={() => handleAddToCart(thisArtwork)} />
+                        <MoreHorizIcon sx={{ fontSize: 30, m: 2, cursor: "pointer" }}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                dispatch(ArtworksThunk.deleteArtwork(thisArtwork.id))
+                                    .then(() => dispatch(deleteArtwork(thisArtwork.id)));
+                                // xử lý điều hướng ở đây
+                            }}
+                        />
+                        <div className="price">{thisArtwork.price}$</div>
                         <button className="save-button">Save</button>
                     </div>
                     <div className="comment-container">
@@ -180,6 +203,7 @@ const Artwork = () => {
                                     </div>
                                 </div>
                             ))}
+
                         </div>
                     </div>
                     <div className="ur-comment">

@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useDispatch } from "react-redux";
-import { addArtwork } from "../features/UploadImage";
+import {useDispatch} from "react-redux";
 import artworks from "../data/Listartworks"
-import { storage, storageRef } from "../firebase/firebaseConfig";
 
 import "../styles/Upload.css";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import {db} from "../firebase/config";
+import {v4} from "uuid";
+import {addArtwork} from "../features/artworks/ArtworksSlice";
+import {ArtworksThunk} from "../features/artworks/ArtworksThunk";
 
 const DisplayImage = () => {
     const [image, setImage] = useState(null);
@@ -20,45 +23,41 @@ const DisplayImage = () => {
     const [topics, setTopics] = useState([]);
     const dispatch = useDispatch();
 
-    const uploadImageToServer = async (image) => {
-        if (!image) return null;
-
-        const imageRef = storageRef(storage, `uploads/${Date.now()}.jpg`);
-
-        try {
-            await imageRef.put(image);
-            const imageUrl = await imageRef.getDownloadURL();
-            return imageUrl;
-        } catch (error) {
-            console.error('Error uploading image to Firebase Storage:', error);
-            return null;
-        }
-    };
 
     const handleUpload = async () => {
-        const uploadedImageUrl = await uploadImageToServer(image);
-
-        const newArtwork = {
-            id: Date.now(),
-            src: uploadedImageUrl,
-            title: title,
-            price: price,
-            topics: topics,
-            description: description,
-        };
-
-        dispatch(addArtwork(newArtwork));
+        if (image !== null) {
+            const imgRef = ref(db, `files/${v4()}`)
+            await uploadBytes(imgRef, image).then(value => {
+                getDownloadURL(value.ref).then(url => {
+                    const newArtwork = {
+                        id: Date.now(),
+                        src: url,
+                        title: title,
+                        price: price,
+                        topics: topics,
+                        description: description,
+                    };
+                    dispatch(ArtworksThunk.createArtwork(newArtwork))
+                        .then(() => {
+                            dispatch(addArtwork(newArtwork));
+                        });
+                    clearForm();
+                });
+            })
+        }
+    }
+    const clearForm = () => {
         setImage(null);
         setTitle("");
         setDescription("");
         setPrice(0);
         setTopics([]);
-    };
+    }
 
     return (
         <div className="upload-container">
             <div className="upload-image">
-                <img src={image} />
+                {image && < img src={URL.createObjectURL(image)}/>}
                 <p>Choose a file or drag and drop it here</p>
                 {!image && (
                     <button>
@@ -66,7 +65,7 @@ const DisplayImage = () => {
                             type="file"
                             accept="image/png, image/gif, image/jpeg"
                             onChange={(event) => {
-                                setImage(URL.createObjectURL(event.target.files[0]));
+                                setImage(event.target.files[0]);
                             }}
                         />
                     </button>
@@ -77,7 +76,7 @@ const DisplayImage = () => {
                 <TextField
                     label="Add a title"
                     variant="outlined"
-                    sx={{ width: 700 }}
+                    sx={{width: 700}}
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
                 />
@@ -85,12 +84,12 @@ const DisplayImage = () => {
                 <TextField
                     label="Add a detailed description"
                     variant="outlined"
-                    sx={{ width: 700 }}
+                    sx={{width: 700}}
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
                 />
                 <p>Price</p>
-                <FormControl fullWidth sx={{ width: 700 }}>
+                <FormControl fullWidth sx={{width: 700}}>
                     <InputLabel htmlFor="outlined-adornment-amount">Price</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-amount"
@@ -102,7 +101,7 @@ const DisplayImage = () => {
                 </FormControl>
                 <p>Topics</p>
                 <Autocomplete
-                    sx={{ width: 700 }}
+                    sx={{width: 700}}
                     multiple
                     id="tags-outlined"
                     options={artworks}
@@ -111,7 +110,7 @@ const DisplayImage = () => {
                     getOptionLabel={(option) => option.topic}
                     filterSelectedOptions
                     renderInput={(params) => (
-                        <TextField {...params} label="Add a topic" />
+                        <TextField {...params} label="Add a topic"/>
                     )}
                 />
                 <button className="upload-button" onClick={handleUpload}>
