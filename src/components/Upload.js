@@ -1,19 +1,19 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import artworks from "../data/Listartworks"
 
 import "../styles/Upload.css";
-import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
-import {db} from "../firebase/config";
-import {v4} from "uuid";
-import {addArtwork} from "../features/artworks/ArtworksSlice";
-import {ArtworksThunk} from "../features/artworks/ArtworksThunk";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db } from "../firebase/config";
+import { v4 } from "uuid";
+import { addArtwork } from "../features/artworks/ArtworksSlice";
+import { ArtworksThunk } from "../features/artworks/ArtworksThunk";
 
 const DisplayImage = () => {
     const [image, setImage] = useState(null);
@@ -57,7 +57,7 @@ const DisplayImage = () => {
     return (
         <div className="upload-container">
             <div className="upload-image">
-                {image && < img src={URL.createObjectURL(image)}/>}
+                {image && < img src={URL.createObjectURL(image)} />}
                 <p>Choose a file or drag and drop it here</p>
                 {!image && (
                     <button>
@@ -76,7 +76,7 @@ const DisplayImage = () => {
                 <TextField
                     label="Add a title"
                     variant="outlined"
-                    sx={{width: 700}}
+                    sx={{ width: 700 }}
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
                 />
@@ -84,12 +84,12 @@ const DisplayImage = () => {
                 <TextField
                     label="Add a detailed description"
                     variant="outlined"
-                    sx={{width: 700}}
+                    sx={{ width: 700 }}
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
                 />
                 <p>Price</p>
-                <FormControl fullWidth sx={{width: 700}}>
+                <FormControl fullWidth sx={{ width: 700 }}>
                     <InputLabel htmlFor="outlined-adornment-amount">Price</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-amount"
@@ -101,7 +101,7 @@ const DisplayImage = () => {
                 </FormControl>
                 <p>Topics</p>
                 <Autocomplete
-                    sx={{width: 700}}
+                    sx={{ width: 700 }}
                     multiple
                     id="tags-outlined"
                     options={artworks}
@@ -110,7 +110,7 @@ const DisplayImage = () => {
                     getOptionLabel={(option) => option.topic}
                     filterSelectedOptions
                     renderInput={(params) => (
-                        <TextField {...params} label="Add a topic"/>
+                        <TextField {...params} label="Add a topic" />
                     )}
                 />
                 <button className="upload-button" onClick={handleUpload}>

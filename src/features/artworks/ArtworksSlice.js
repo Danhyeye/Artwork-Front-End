@@ -1,12 +1,12 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import artworks from "../../data/Listartworks";
-import {ArtworksThunk} from "./ArtworksThunk";
+import { ArtworksThunk } from "./ArtworksThunk";
 
 const initialArtwork = JSON.parse(localStorage.getItem("artworks")) || artworks;
 
 export const artWorkSlice = createSlice({
     name: "artworks",
-    initialState: {value: initialArtwork},
+    initialState: { value: initialArtwork },
     reducers: {
         addArtwork: (state, action) => {
             state.value.push(action.payload);
@@ -39,4 +39,4 @@ export const artWorkSlice = createSlice({
     }
 })
 export default artWorkSlice.reducer;
-export const {addArtwork, deleteArtwork} = artWorkSlice.actions;
+export const { addArtwork, deleteArtwork } = artWorkSlice.actions;

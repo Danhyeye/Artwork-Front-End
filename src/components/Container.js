@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import '../styles/Container.css';
 import Avatar from '@mui/material/Avatar';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from "react-redux";
-import {deleteArtwork} from "../features/artworks/ArtworksSlice";
-import {addToCart} from "../features/carts/CartsSlice";
-import {ArtworksThunk} from "../features/artworks/ArtworksThunk";
-import {CartsThunk} from "../features/carts/CartsThunk";
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { deleteArtwork } from "../features/artworks/ArtworksSlice";
+import { addToCart } from "../features/carts/CartsSlice";
+import { ArtworksThunk } from "../features/artworks/ArtworksThunk";
+import { CartsThunk } from "../features/carts/CartsThunk";
 
 
 const Container = () => {
@@ -31,7 +31,7 @@ const Container = () => {
             {artworks?.map((art, index) => (
                 <Link to={`/artwork/${art.id}`} key={art.id}>
                     <div id={art.id} className={`artwork artwork-${index % 4}`}>
-                        <img src={art.src} alt={art.src}/>
+                        <img src={art.src} alt={art.src} />
                         <div className='overlay'>
                             <div className='save-btn' onClick={(e) => {
                                 e.preventDefault();
@@ -43,9 +43,9 @@ const Container = () => {
                             ><HighlightOffIcon onClick={(e) => {
                                 e.preventDefault();
                                 dispatch(ArtworksThunk.deleteArtwork(art.id))
-                                    .then(()=>dispatch(deleteArtwork(art.id)));
-                            }}/></div>
-                            <div className='avatar-user'><Avatar sx={{width: 24, height: 24}}/></div>
+                                    .then(() => dispatch(deleteArtwork(art.id)));
+                            }} /></div>
+                            <div className='avatar-user'><Avatar sx={{ width: 24, height: 24 }} /></div>
                         </div>
                     </div>
                 </Link>
