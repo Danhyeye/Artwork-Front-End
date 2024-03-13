@@ -33,6 +33,7 @@ export const cartsSlice = createSlice({
             })
             .addCase(CartsThunk.deleteCart.fulfilled, (state, action) => {
                 state.value = state.value.filter((artwork) => artwork.id !== action.payload.id);
+                localStorage.setItem("carts", JSON.stringify(state.value));
             });
     }
 })

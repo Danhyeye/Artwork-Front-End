@@ -29,6 +29,9 @@ export const artWorkSlice = createSlice({
             .addCase(ArtworksThunk.getAllArtworks.pending, (state, action) => {
                 console.log("call api pending");
             })
+            .addCase(ArtworksThunk.getArtworkbyName.fulfilled, (state, action) => {
+                state.value = action.payload;
+            })
             .addCase(ArtworksThunk.createArtwork.fulfilled, (state, action) => {
                 state.value.push(action.payload);
             })

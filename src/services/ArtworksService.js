@@ -2,16 +2,28 @@ import apiService from "./ApiService";
 
 export const ArtworksService = {
     getArtworks: async () => {
-        return apiService.get('ArtWorks')
+        return apiService.get('artworks')
     },
     getArtwork: async (id) => {
-        return apiService.get(`ArtWorks/${id}`)
+        return apiService.get(`artworks/${id}`)
+    },
+    getCreatedArtworks: async (userId) => {
+        return apiService.get(`artworks/created/${userId}`)
+    },
+    getSavedArtworks: async (userId) => {
+        return apiService.get(`artworks/saved/${userId}`)
+    },
+    getArtworkbyName: async (topicname) => {
+        return apiService.get(`artworks/topic?topicname=${topicname}`)
+    },
+    saveArtwork: async (userId, artworkId) => {
+        return apiService.post(`artworks/save`, { userId, artworkId })
     },
     createArtwork: async (artwork) => {
-        return apiService.post('ArtWorks', artwork)
+        return apiService.post('artworks', artwork)
     },
     deleteArtwork: async (id) => {
-        return apiService.delete(`ArtWorks/${id}`)
+        return apiService.delete(`artworks/${id}`)
     }
 }
 

@@ -8,10 +8,14 @@ export const ArtworksThunk = {
     getArtwork: createAsyncThunk("artworks/get-by-id", async (id) => {
         return ArtworksService.getArtwork(id);
     }),
+    getArtworkbyName: createAsyncThunk("artworks/get-by-name", async (name) => {
+        return ArtworksService.getArtworkbyName(name);
+    }),
     createArtwork: createAsyncThunk("artworks/create-artworks", async (artwork) => {
         return ArtworksService.createArtwork(artwork);
     }),
     deleteArtwork: createAsyncThunk("artworks/delete-artwork", async (id) => {
         return ArtworksService.deleteArtwork(id);
     }),
+
 }
