@@ -13,6 +13,9 @@ export const ArtworksService = {
     getSavedArtworks: async (userId) => {
         return apiService.get(`artworks/saved/${userId}`)
     },
+    getArtworksByUserId: async (userId) => {
+        return apiService.get(`artworks/cart?userId=${userId}`)
+    },
     getArtworkbyName: async (topicname) => {
         return apiService.get(`artworks/topic?topicname=${topicname}`)
     },

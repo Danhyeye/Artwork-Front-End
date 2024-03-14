@@ -4,12 +4,14 @@ import { cartsSlice } from "./carts/CartsSlice";
 import { usersSlice } from "./users/UsersSlice";
 import { topicsSlice } from './topics/TopicsSlice';
 import {commentSlice} from "./FeaturesComment";
+import {ordersSlice} from "./orders/OrdersSlice";
 
 const rootReducer = combineReducers({
     artworks: artWorkSlice.reducer,
     carts: cartsSlice.reducer,
     users: usersSlice.reducer,
     topics: topicsSlice.reducer,
+    orders: ordersSlice.reducer,
     comments:commentSlice.reducer
 })
 

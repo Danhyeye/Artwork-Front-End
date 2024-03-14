@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
@@ -16,6 +16,9 @@ import {deleteArtwork} from "../features/artworks/ArtworksSlice";
 import {CommentsService} from "../services/CommentsService";
 import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
+import {stringAvatar} from "../utils/string";
+import { formatDistanceToNow } from 'date-fns';
+import { vi } from 'date-fns/locale';
 
 const Artwork = () => {
     const {id} = useParams();
@@ -39,6 +42,7 @@ const Artwork = () => {
     const [myComments, setMyComments] = useState("");
     const [selectedComment, setSelectedComment] = useState({});
     const [updateFlag, setUpdateFlag] = useState(false);
+    const carts = useSelector((state) => state.carts?.value || []);
 
     useEffect(() => {
         CommentsService.getCommentsByArtworkId(id).then((comments) => {
@@ -96,21 +100,26 @@ const Artwork = () => {
         setAnchorEl(null);
     };
 
-    const handleAddToCart = async (artworkId,created_by) => {
+    const handleAddToCart = useCallback(async (artworkId, created_by) => {
         if (!user || !user.id) {
             handleClickOpen();
+            setAlertContent("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng")
             return;
         }
-        console.log("created_by",created_by)
-        if(user.id !== created_by){
+        if (carts.find(cart => cart.artworkId === artworkId)) {
+            handleClickOpen();
+            setAlertContent("Artwork đã có trong giỏ hàng")
+            return;
+        }
+        if (user.id !== created_by) {
             const cart = {
                 userId: user.id,
                 artworkId
             }
+            dispatch(addToCart(cart))
             dispatch(CartsThunk.addCart(cart))
-                .then(() => dispatch(addToCart(thisArtwork)))
         }
-    }
+    }, [carts, user, dispatch]);
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const handleClickOpen = () => {
@@ -137,7 +146,6 @@ const Artwork = () => {
 
     const handleClickAlert = () => {
         console.log("alert")
-        setOpenAlert(true);
     };
 
     const handleCloseAlert = (event, reason) => {
@@ -147,6 +155,7 @@ const Artwork = () => {
         setOpenAlert(false);
     };
 
+    const [alertContent, setAlertContent] = useState("Vui lòng đăng nhập để có thể thực hiện chức năng này")
     return (
         <>
             <main className="pin-container">
@@ -161,7 +170,7 @@ const Artwork = () => {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Vui lòng đăng nhập để có thể thực hiện chức năng này
+                            {alertContent}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -182,7 +191,7 @@ const Artwork = () => {
                         <div className="pin-button">
                             <LoyaltyIcon
                                 sx={{fontSize: 30, m: 2, cursor: "pointer"}}
-                                onClick={() => handleAddToCart(thisArtwork.id,thisArtwork.created_by)}
+                                onClick={() => handleAddToCart(thisArtwork.id, thisArtwork.created_by)}
                             />
                             <MoreHorizIcon
                                 sx={{fontSize: 30, m: 2, cursor: "pointer"}}
@@ -207,13 +216,15 @@ const Artwork = () => {
                             <>
                                 <div className="title">{thisArtwork.title}</div>
                                 <div className="topic" readOnly>
-                                        {thisArtwork.topics.map(topic=>topic.name).join(', ')}
+                                    {thisArtwork.topics.map(topic => topic.name).join(', ')}
                                 </div>
                                 <div>
                                     <div className="user">
-                                        <Avatar sx={{
-                                            fontSize: 30, m: 2, cursor: "pointer"
-                                        }}>{user?.last_name?.charAt(0) || ""}</Avatar>
+                                        <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
+                                                sx={{
+                                                    width: 40 , height: 40 , fontSize: 18,
+                                                    m:2
+                                                }}/>
                                         <div className="user-follower">
                                             <p className="artist">{thisArtwork.first_name + " " + thisArtwork.last_name}</p>
                                         </div>
@@ -227,12 +238,16 @@ const Artwork = () => {
                                     <p className="text-comment">Comment</p>
                                     {comments.map((comment) => (
                                         <div className="comments" key={comment.id} id={comment.id}>
-                                            <Avatar sx={{
-                                                fontSize: 30, m: 2, cursor: "pointer"
-                                            }}>{user?.first_name?.charAt(0) || ""}</Avatar>
+                                            <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
+                                                    sx={{
+                                                        width: 40 , height: 40 , fontSize: 18,
+                                                        m:2
+                                                    }}/>
                                             <div className="reply-comment">
-                                                <p className="user-comment">{comment.first_name +" " +comment.last_name}</p>
-                                                <p className="timestamp">{comment.time}</p>
+                                                <p className="user-comment">{comment.first_name + " " + comment.last_name}</p>
+                                                <p className="timestamp">{
+                                                    formatDistanceToNow(new Date(comment.date), { addSuffix: true, locale: vi })
+                                                }</p>
                                             </div>
 
                                             <p className="comment-text">{comment.comment}</p>

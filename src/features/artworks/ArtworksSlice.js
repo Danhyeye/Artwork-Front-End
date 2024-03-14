@@ -13,7 +13,8 @@ export const artWorkSlice = createSlice({
             localStorage.setItem("artworks", JSON.stringify(state.value));
         },
         deleteArtwork: (state, action) => {
-            state.value = state.value.filter((artwork) => artwork.id !== action.payload.id);
+            console.log(action.payload)
+            state.value = state.value.filter((artwork) => artwork.id !== action.payload);
             localStorage.setItem("artworks", JSON.stringify(state.value));
         },
     },

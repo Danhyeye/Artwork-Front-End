@@ -15,6 +15,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useDispatch} from "react-redux";
 import {UsersThunk} from "../features/users/UsersThunk";
 import {useNavigate} from "react-router-dom";
+import {OrdersThunk} from "../features/orders/OrdersThunk";
 
 
 function Copyright(props) {

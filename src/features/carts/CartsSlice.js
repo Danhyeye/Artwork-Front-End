@@ -29,7 +29,7 @@ export const cartsSlice = createSlice({
                 console.log("call api pending");
             })
             .addCase(CartsThunk.addCart.fulfilled, (state, action) => {
-                state.value.push(action.payload);
+                console.log("call api sucees");
             })
             .addCase(CartsThunk.deleteCart.fulfilled, (state, action) => {
                 state.value = state.value.filter((artwork) => artwork.id !== action.payload.id);
