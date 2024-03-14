@@ -13,18 +13,15 @@ import Profile from './components/Profile';
 import Editprofile from './components/Editprofile';
 import Payment from "./components/Payment";
 import Orders from "./components/Orders";
-import {useEffect} from "react";
-import {OrdersThunk} from "./features/orders/OrdersThunk";
+import Dashboard from "./components/dashboard/Dashboard";
 
-// import artworks from '../data/Listartworks.json';
-// import { Container } from '@mui/material';
-// import Profile from './components/Profile';
 
 const App = () => {
     return (
         <Provider store={store}>
             <Router>
                 <Routes>
+                    <Route path='/admin' element={<Dashboard/>}/>
                     <Route path='/payment' element={<Payment/>}/>
                     <Route path='/*' element={
                         <>

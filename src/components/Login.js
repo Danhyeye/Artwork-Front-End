@@ -12,9 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {UsersThunk} from "../features/users/UsersThunk";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {OrdersThunk} from "../features/orders/OrdersThunk";
 
 
@@ -43,6 +43,11 @@ export default function SignIn() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const user = useSelector((state) => state.users?.value);
+    const [url,setUrl] = React.useState('');
+
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -55,10 +60,16 @@ export default function SignIn() {
             password: data.get('password')
         }
         dispatch(UsersThunk.login(user)).then((response) => {
-            navigate('/home')
+            setUrl("/home")
         });
     };
 
+    if(url !=='' && (!user || !user.id)){
+        alert("Login failed")
+    }
+    if(url !== '' && user  && user.id){
+        return <Navigate to={url}/>
+    }
 
     return (
         <div className='login'>

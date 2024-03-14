@@ -30,6 +30,7 @@ import {useSelector} from "react-redux";
 import {ArtworksService} from "../services/ArtworksService";
 import FullScreenLoading from "./FullScreenLoading";
 import {OrdersService} from "../services/OrdersService";
+import {DownloadImgService} from "../services/DownloadImgService";
 
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
@@ -121,6 +122,9 @@ export default function Checkout() {
             setLoading(true)
             //call api
             const response = await OrdersService.createOrder(order);
+            artworks.forEach(artwork=>{
+                DownloadImgService.downloadImage(artwork.src);
+            })
             setActiveStep(activeStep + 1);
             setLoading(false)
         }
@@ -166,7 +170,7 @@ export default function Checkout() {
                         <Button
                             startIcon={<ArrowBackRoundedIcon/>}
                             component="a"
-                            href="/material-ui/getting-started/templates/landing-page/"
+                            href="/"
                             sx={{ml: '-8px'}}
                         >
                             Back to Home page

@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import {useNavigate, useParams} from "react-router-dom";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -17,8 +16,11 @@ import {CommentsService} from "../services/CommentsService";
 import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import {stringAvatar} from "../utils/string";
-import { formatDistanceToNow } from 'date-fns';
-import { vi } from 'date-fns/locale';
+import {formatDistanceToNow} from 'date-fns';
+import {vi} from 'date-fns/locale';
+import Typography from "@mui/material/Typography";
+
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Artwork = () => {
     const {id} = useParams();
@@ -49,16 +51,19 @@ const Artwork = () => {
             setComments(comments)
         })
     }, [])
-
     const handlePostComment = (content) => {
         if (!user || !user.id) return;
         const comment = {
-            userId: user.id,
+            user_id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
             artworkId: id,
-            comment: myComments
+            comment: myComments,
+            date: new Date()
         };
         setComments(prev => [...prev, comment]);
         setMyComments("")
+
         CommentsService.postComment(comment).then((res) => {
             console.log(res)
         })
@@ -87,19 +92,15 @@ const Artwork = () => {
     const handleCloseUpdate = () => {
         setUpdateFlag(false);
     };
-
     const handleChangeComment = (event) => {
         setMyComments(event.target.value);
     };
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
-
     const handleAddToCart = useCallback(async (artworkId, created_by) => {
         if (!user || !user.id) {
             handleClickOpen();
@@ -148,6 +149,7 @@ const Artwork = () => {
         console.log("alert")
     };
 
+    const navigate = useNavigate()
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -155,10 +157,11 @@ const Artwork = () => {
         setOpenAlert(false);
     };
 
+    console.log("thisArtwork", thisArtwork)
     const [alertContent, setAlertContent] = useState("Vui lòng đăng nhập để có thể thực hiện chức năng này")
     return (
         <>
-            <main className="pin-container">
+            <main className="pin-container" sx={{height: '90vh'}}>
                 <Dialog
                     open={openDialog}
                     onClose={handleCloseDialog}
@@ -186,22 +189,30 @@ const Artwork = () => {
                         <img src={thisArtwork.src} alt={`Artwork ${thisArtwork.id}`}/>
                     </div>
                 )}
-                <div className="pin-title">
+                <Box className="pin-title">
                     {thisArtwork && (
                         <div className="pin-button">
                             <LoyaltyIcon
                                 sx={{fontSize: 30, m: 2, cursor: "pointer"}}
                                 onClick={() => handleAddToCart(thisArtwork.id, thisArtwork.created_by)}
                             />
-                            <MoreHorizIcon
-                                sx={{fontSize: 30, m: 2, cursor: "pointer"}}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    dispatch(ArtworksThunk.deleteArtwork(thisArtwork.id)).then(() =>
-                                        dispatch(deleteArtwork(thisArtwork.id))
-                                    );
-                                }}
-                            />
+                            {
+                                user.id === thisArtwork.created_by && (
+                                    <DeleteIcon
+                                        sx={{fontSize: 30, mr: 4, cursor: "pointer"}}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (window.confirm("Bạn có chắc là muốn xóa artwork này?")) {
+                                                dispatch(ArtworksThunk.deleteArtwork(thisArtwork.id)).then(() => {
+                                                    dispatch(deleteArtwork(thisArtwork.id))
+                                                    navigate("/")
+                                                })
+                                            }
+                                        }}
+                                    />
+                                )
+                            }
+
                             <div className="price">{parseFloat(thisArtwork.price)}$</div>
                             <div className='save-btn' onClick={(e) => {
                                 e.preventDefault();
@@ -220,10 +231,10 @@ const Artwork = () => {
                                 </div>
                                 <div>
                                     <div className="user">
-                                        <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
+                                        <Avatar {...stringAvatar(thisArtwork?.first_name + " " + thisArtwork?.last_name)}
                                                 sx={{
-                                                    width: 40 , height: 40 , fontSize: 18,
-                                                    m:2
+                                                    width: 40, height: 40, fontSize: 18,
+                                                    m: 2
                                                 }}/>
                                         <div className="user-follower">
                                             <p className="artist">{thisArtwork.first_name + " " + thisArtwork.last_name}</p>
@@ -236,61 +247,12 @@ const Artwork = () => {
                                     </div>
 
                                     <p className="text-comment">Comment</p>
-                                    {comments.map((comment) => (
-                                        <div className="comments" key={comment.id} id={comment.id}>
-                                            <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
-                                                    sx={{
-                                                        width: 40 , height: 40 , fontSize: 18,
-                                                        m:2
-                                                    }}/>
-                                            <div className="reply-comment">
-                                                <p className="user-comment">{comment.first_name + " " + comment.last_name}</p>
-                                                <p className="timestamp">{
-                                                    formatDistanceToNow(new Date(comment.date), { addSuffix: true, locale: vi })
-                                                }</p>
-                                            </div>
 
-                                            <p className="comment-text">{comment.comment}</p>
+                                    <CommentSection comments={comments} handleDeleteComment={handleDeleteComment}
+                                                    setMyComments={setMyComments}
+                                                    user={user} setUpdateFlag={setUpdateFlag}
+                                                    setSelectedComment={setSelectedComment}/>
 
-                                            {
-                                                comment.user_id === user.id && (
-                                                    <div
-                                                        style={{
-                                                            display: "flex",
-                                                            justifyContent: "space-between",
-                                                            gap: "10px",
-                                                        }}
-                                                    >
-                                                        <div
-                                                            style={{
-                                                                cursor: "pointer",
-                                                                color: "red",
-                                                                fontSize: "14px",
-                                                            }}
-                                                            onClick={() => handleDeleteComment(comment.id)}
-                                                        >
-                                                            Delete
-                                                        </div>
-                                                        <div
-                                                            style={{
-                                                                cursor: "pointer",
-                                                                color: "blue",
-                                                                fontSize: "14px",
-                                                            }}
-                                                            onClick={() => {
-                                                                setUpdateFlag(true);
-                                                                setSelectedComment(comment);
-                                                                setMyComments(comment.comment);
-                                                            }}
-                                                        >
-                                                            Update
-                                                        </div>
-                                                    </div>
-                                                )
-                                            }
-
-                                        </div>
-                                    ))}
                                     <div className="ur-comment">
                                         <div className="react">
                                             <p className="think">What do you think?</p>
@@ -300,7 +262,11 @@ const Artwork = () => {
                                             ></button>
                                         </div>
                                         <div className="add-comment">
-                                            <Avatar sx={{fontSize: 40, m: 2, cursor: "pointer"}}/>
+                                            <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
+                                                    sx={{
+                                                        width: 40, height: 40, fontSize: 18,
+                                                        m: 2
+                                                    }}/>
                                             <Box
                                                 component="form"
                                                 sx={{
@@ -356,7 +322,7 @@ const Artwork = () => {
                             </>
                         )}
                     </div>
-                </div>
+                </Box>
             </main>
             <Snackbar
                 anchorOrigin={{
@@ -376,6 +342,77 @@ const Artwork = () => {
             </div>
         </>
     )
+}
+
+
+function CommentSection({comments, user, handleDeleteComment, setUpdateFlag, setSelectedComment, setMyComments}) {
+
+    const stringAvatar = (name) => {
+        return {
+            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+        };
+    };
+
+    return (
+        <Box sx={{
+            maxHeight: '260px', // Đặt chiều cao tối đa cho Box
+            overflowY: 'scroll', // Thêm thanh cuộn theo chiều dọc nếu nội dung vượt quá chiều cao tối đa
+            '&::-webkit-scrollbar': {
+                width: '0.4em'
+            },
+            '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'rgba(0,0,0,.1)',
+                outline: '1px solid slategrey'
+            }
+        }}>
+            {comments.map((comment) => (
+                <Box key={comment.id} id={comment.id} sx={{
+                    my: 2,
+                    p: 2,
+                    ml: 2,
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                }}>
+                    <Box sx={{display: 'flex', justifyContent: "space-between"}}>
+                        <Box sx={{display: 'flex', alignItems: "center"}}>
+                            <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
+                                    sx={{width: 40, height: 40, fontSize: 18, mr: 2}}/>
+                            <Box>
+                                <Typography sx={{
+                                    fontWeight: 'bold',
+                                    color: '#333',
+                                    mb: 0.5
+                                }}>{comment.first_name + " " + comment.last_name}</Typography>
+                                <Typography sx={{color: '#666', fontSize: '0.875rem'}}>
+                                    {formatDistanceToNow(new Date(comment.date), {addSuffix: true, locale: vi})}
+                                </Typography>
+                            </Box>
+                        </Box>
+                        {comment.user_id === user.id && (
+                            <Box sx={{display: "flex", justifyContent: "flex-end", mt: 2, gap: "10px"}}>
+                                <Button variant="text" size="small" color="error"
+                                        onClick={() => handleDeleteComment(comment.id)}>
+                                    Delete
+                                </Button>
+                                <Button variant="text" size="small" color="primary" onClick={() => {
+                                    setUpdateFlag(true);
+                                    setSelectedComment(comment);
+                                    setMyComments(comment.comment);
+                                }}>
+                                    Update
+                                </Button>
+                            </Box>
+                        )}
+                    </Box>
+
+                    <Typography sx={{mt: 1.5, color: '#444', fontSize: '0.975rem'}}>
+                        {comment.comment}
+                    </Typography>
+                </Box>
+            ))}
+        </Box>
+    );
 }
 
 export default Artwork;

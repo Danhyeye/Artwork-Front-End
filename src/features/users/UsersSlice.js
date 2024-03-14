@@ -19,7 +19,7 @@ export const usersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(UsersThunk.login.fulfilled, (state, action) => {
-                state.value = action.payload;
+                state.value = action.payload === "Login failed" ? {} : action.payload;
                 localStorage.setItem("user", JSON.stringify(state.value));
             })
             .addCase(UsersThunk.login.rejected, (state, action) => {
@@ -29,4 +29,4 @@ export const usersSlice = createSlice({
     }
 })
 export default usersSlice.reducer;
-export const {login, logout,editUser} = usersSlice.actions;
+export const {login, logout, editUser} = usersSlice.actions;
