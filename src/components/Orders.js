@@ -116,7 +116,7 @@ function RowComponent({ row }) {
                                                 src={item.src}
                                             />
                                             <Typography variant="body1">Giá: ${item.price}</Typography>
-                                            <Typography variant="body2" color="text.secondary">Người bán: {`${row.first_name} ${row.last_name}`}</Typography>
+                                            <Typography variant="body2" color="text.secondary">Người bán: {item.firstname + " " + item.lastname}</Typography>
                                         </Paper>
                                     </Grid>
                                 ))}
