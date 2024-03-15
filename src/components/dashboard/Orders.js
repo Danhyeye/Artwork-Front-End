@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Collapse,
     Paper,
@@ -15,7 +15,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import {OrdersService} from "../../services/OrdersService";
+import { OrdersService } from "../../services/OrdersService";
 
 
 const Orders = () => {
@@ -23,42 +23,42 @@ const Orders = () => {
     const [orders, setOrders] = useState([])
 
     useEffect(() => {
-        (async()=>{
+        (async () => {
             const orders = await OrdersService.get()
-            setOrders(orders||[])
+            setOrders(orders || [])
         })()
     }, [])
 
     return (
 
-            <TableContainer
-            >
-                <Typography variant="h4" component="h2" gutterBottom sx={{mb: 2}}>Danh sách đơn hàng</Typography>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell>ID</TableCell>
-                            <TableCell align="center">Tên khách hàng</TableCell>
-                            <TableCell align="left">Địa chỉ</TableCell>
-                            <TableCell align="center">Thành phố</TableCell>
-                            <TableCell align="center">Mã vùng</TableCell>
-                            <TableCell align="center">Mã bưu điện</TableCell>
-                            <TableCell align="center">Quốc tịch</TableCell>
-                            <TableCell align="center">Tổng Tiền</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        { orders.map((row) => (
-                            <RowComponent key={row.id} row={row}/>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+        <TableContainer
+        >
+            <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 2 }}>Danh sách đơn hàng</Typography>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>ID</TableCell>
+                        <TableCell align="center">Tên khách hàng</TableCell>
+                        <TableCell align="left">Địa chỉ</TableCell>
+                        <TableCell align="center">Thành phố</TableCell>
+                        <TableCell align="center">Mã vùng</TableCell>
+                        <TableCell align="center">Mã bưu điện</TableCell>
+                        <TableCell align="center">Quốc tịch</TableCell>
+                        <TableCell align="center">Tổng Tiền</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {orders.map((row) => (
+                        <RowComponent key={row.id} row={row} />
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 };
 
-function RowComponent({row}) {
+function RowComponent({ row }) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -66,7 +66,7 @@ function RowComponent({row}) {
             <TableRow>
                 <TableCell>
                     <IconButton size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
@@ -81,7 +81,7 @@ function RowComponent({row}) {
                 <TableCell align="center">{row.total_price}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography variant="h6" gutterBottom component="div">
@@ -104,7 +104,7 @@ function RowComponent({row}) {
                                                 src={item.src}
                                             />
                                             <Typography variant="body1">Giá: ${item.price}</Typography>
-                                            <Typography variant="body2" color="text.secondary">Người bán: {item.title}</Typography>
+                                            <Typography variant="body2" color="text.secondary">Người bán: {`${row.first_name} ${row.last_name}`}</Typography>
                                         </Paper>
                                     </Grid>
                                 ))}
