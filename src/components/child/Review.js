@@ -11,37 +11,37 @@ import Typography from '@mui/material/Typography';
 const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 
 
-export default function Review({order, price, tax}) {
+export default function Review({ order, price, tax }) {
     const payments = [
-        {name: 'Card type:', detail: order.detail},
-        {name: 'Card holder:', detail: 'Mr. John Smith'},
-        {name: 'Card number:', detail: 'xxxx-xxxx-xxxx-1234'},
-        {name: 'Expiry date:', detail: '04/2024'},
+        { name: 'Card type:', detail: order.detail },
+        { name: 'Card holder:', detail: 'Mr. John Smith' },
+        { name: 'Card number:', detail: 'xxxx-xxxx-xxxx-1234' },
+        { name: 'Expiry date:', detail: '04/2024' },
     ];
     return (
         <Stack spacing={2}>
             <List disablePadding>
-                <ListItem sx={{py: 1, px: 0}}>
-                    <ListItemText primary="Products" secondary="4 selected"/>
-                    <Typography variant="body2">${price}</Typography>
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="Products" secondary="4 selected" />
+                    <Typography variant="body2">{price}$</Typography>
                 </ListItem>
-                <ListItem sx={{py: 1, px: 0}}>
-                    <ListItemText primary="VAT" secondary="Plus taxes"/>
-                    <Typography variant="body2">${tax}</Typography>
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="VAT" secondary="Plus taxes" />
+                    <Typography variant="body2">{tax}$</Typography>
                 </ListItem>
-                <ListItem sx={{py: 1, px: 0}}>
-                    <ListItemText primary="Total"/>
-                    <Typography variant="subtitle1" sx={{fontWeight: 700}}>
-                        ${order.total_price}
+                <ListItem sx={{ py: 1, px: 0 }}>
+                    <ListItemText primary="Total" />
+                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                        {order.total_price}$
                     </Typography>
                 </ListItem>
             </List>
-            <Divider/>
+            <Divider />
             <Stack
                 direction="column"
-                divider={<Divider flexItem/>}
+                divider={<Divider flexItem />}
                 spacing={2}
-                sx={{my: 2}}
+                sx={{ my: 2 }}
             >
                 <div>
                     <Typography variant="subtitle2" gutterBottom>
@@ -63,7 +63,7 @@ export default function Review({order, price, tax}) {
                                     direction="row"
                                     spacing={1}
                                     useFlexGap
-                                    sx={{width: '100%', mb: 1}}
+                                    sx={{ width: '100%', mb: 1 }}
                                 >
                                     <Typography variant="body1" color="text.secondary">
                                         Card type
@@ -74,7 +74,7 @@ export default function Review({order, price, tax}) {
                                     direction="row"
                                     spacing={1}
                                     useFlexGap
-                                    sx={{width: '100%', mb: 1}}
+                                    sx={{ width: '100%', mb: 1 }}
                                 >
                                     <Typography variant="body1" color="text.secondary">
                                         Card holder
@@ -85,7 +85,7 @@ export default function Review({order, price, tax}) {
                                     direction="row"
                                     spacing={1}
                                     useFlexGap
-                                    sx={{width: '100%', mb: 1}}
+                                    sx={{ width: '100%', mb: 1 }}
                                 >
                                     <Typography variant="body1" color="text.secondary">
                                         CVV
@@ -96,7 +96,7 @@ export default function Review({order, price, tax}) {
                                     direction="row"
                                     spacing={1}
                                     useFlexGap
-                                    sx={{width: '100%', mb: 1}}
+                                    sx={{ width: '100%', mb: 1 }}
                                 >
                                     <Typography variant="body1" color="text.secondary">
                                         Card number
@@ -107,7 +107,7 @@ export default function Review({order, price, tax}) {
                                     direction="row"
                                     spacing={1}
                                     useFlexGap
-                                    sx={{width: '100%', mb: 1}}
+                                    sx={{ width: '100%', mb: 1 }}
                                 >
                                     <Typography variant="body1" color="text.secondary">
                                         Expiry date

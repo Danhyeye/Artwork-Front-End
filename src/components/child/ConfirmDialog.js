@@ -18,7 +18,6 @@ export default function ConfirmDialog() {
     };
 
     const handleConfirm = () => {
-        // Handle your confirm action here
         setOpen(false);
     };
 

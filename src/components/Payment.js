@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,25 +12,22 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
-
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-
 import AddressForm from './child/AddressForm';
 import Info from './child/Info';
 import InfoMobile from './child/InfoMobile';
 import PaymentForm from './child/PaymentForm';
 import Review from './child/Review';
 import ToggleColorMode from './child/ToggleColorMode';
-import {Link, Navigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {ArtworksService} from "../services/ArtworksService";
+import { Link, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ArtworksService } from "../services/ArtworksService";
 import FullScreenLoading from "./FullScreenLoading";
-import {OrdersService} from "../services/OrdersService";
-import {DownloadImgService} from "../services/DownloadImgService";
+import { OrdersService } from "../services/OrdersService";
+import { DownloadImgService } from "../services/DownloadImgService";
 
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
@@ -45,11 +42,11 @@ const logoStyle = {
 function getStepContent(step, order, handleChangeOrder, totalMoney, tax) {
     switch (step) {
         case 0:
-            return <AddressForm order={order} onChangeOrder={handleChangeOrder}/>;
+            return <AddressForm order={order} onChangeOrder={handleChangeOrder} />;
         case 1:
-            return <PaymentForm order={order} onChangeOrder={handleChangeOrder}/>;
+            return <PaymentForm order={order} onChangeOrder={handleChangeOrder} />;
         case 2:
-            return <Review order={order} price={totalMoney} tax={tax}/>;
+            return <Review order={order} price={totalMoney} tax={tax} />;
         default:
             throw new Error('Unknown step');
     }
@@ -58,7 +55,7 @@ function getStepContent(step, order, handleChangeOrder, totalMoney, tax) {
 export default function Checkout() {
     const [mode, setMode] = React.useState('light');
     const [showCustomTheme, setShowCustomTheme] = React.useState(true);
-    const defaultTheme = createTheme({palette: {mode}});
+    const defaultTheme = createTheme({ palette: { mode } });
     const [activeStep, setActiveStep] = React.useState(0);
 
     const [artworks, setArtworks] = React.useState([]);
@@ -71,7 +68,7 @@ export default function Checkout() {
         const totalMoney = artworks.reduce((total, artwork) => total + artwork.price, 0);
         const tax = totalMoney * 0.2;
         const totalMoneyWithTax = totalMoney + tax;
-        setOrder(prev => ({...prev, total_price: totalMoneyWithTax}))
+        setOrder(prev => ({ ...prev, total_price: totalMoneyWithTax }))
     }, [artworks])
 
     const [order, setOrder] = React.useState({
@@ -106,7 +103,7 @@ export default function Checkout() {
                 created_by: artwork.created_by,
             }))
             setArtworks(response);
-            setOrder(prev => ({...prev, user_id: user.id, artworks: artworksSaved}));
+            setOrder(prev => ({ ...prev, user_id: user.id, artworks: artworksSaved }));
         })()
     }, []);
 
@@ -122,7 +119,7 @@ export default function Checkout() {
             setLoading(true)
             //call api
             const response = await OrdersService.createOrder(order);
-            const imageUrls =  artworks.map(artwork=>artwork.src)
+            const imageUrls = artworks.map(artwork => artwork.src)
             DownloadImgService.downloadImage(imageUrls);
 
             setActiveStep(activeStep + 1);
@@ -135,25 +132,25 @@ export default function Checkout() {
     };
 
     const user = useSelector((state) => state.users?.value);
-    if (!user || !user.id) return <Navigate to={'/login'}/>
+    if (!user || !user.id) return <Navigate to={'/login'} />
 
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <FullScreenLoading isOpen={loading}/>
-            <CssBaseline/>
-            <Grid container sx={{height: {xs: '100%', sm: '100dvh'}}}>
+            <FullScreenLoading isOpen={loading} />
+            <CssBaseline />
+            <Grid container sx={{ height: { xs: '100%', sm: '100dvh' } }}>
                 <Grid
                     item
                     xs={12}
                     sm={5}
                     lg={4}
                     sx={{
-                        display: {xs: 'none', md: 'flex'},
+                        display: { xs: 'none', md: 'flex' },
                         flexDirection: 'column',
                         backgroundColor: 'background.paper',
-                        borderRight: {sm: 'none', md: '1px solid'},
-                        borderColor: {sm: 'none', md: 'divider'},
+                        borderRight: { sm: 'none', md: '1px solid' },
+                        borderColor: { sm: 'none', md: 'divider' },
                         alignItems: 'start',
                         pt: 4,
                         px: 10,
@@ -168,10 +165,10 @@ export default function Checkout() {
                         }}
                     >
                         <Button
-                            startIcon={<ArrowBackRoundedIcon/>}
+                            startIcon={<ArrowBackRoundedIcon />}
                             component="a"
                             href="/"
-                            sx={{ml: '-8px'}}
+                            sx={{ ml: '-8px' }}
                         >
                             Back to Home page
                         </Button>
@@ -185,7 +182,7 @@ export default function Checkout() {
                             maxWidth: 500,
                         }}
                     >
-                        <Info totalPrice={totalMoney} products={artworks}/>
+                        <Info totalPrice={totalMoney} products={artworks} />
                     </Box>
                 </Grid>
                 <Grid
@@ -198,35 +195,35 @@ export default function Checkout() {
                         flexDirection: 'column',
                         maxWidth: '100%',
                         width: '100%',
-                        backgroundColor: {xs: 'transparent', sm: 'background.default'},
+                        backgroundColor: { xs: 'transparent', sm: 'background.default' },
                         alignItems: 'start',
-                        pt: {xs: 2, sm: 4},
-                        px: {xs: 2, sm: 10},
-                        gap: {xs: 4, md: 8},
+                        pt: { xs: 2, sm: 4 },
+                        px: { xs: 2, sm: 10 },
+                        gap: { xs: 4, md: 8 },
                     }}
                 >
                     <Box
                         sx={{
                             display: 'flex',
-                            justifyContent: {sm: 'space-between', md: 'flex-end'},
+                            justifyContent: { sm: 'space-between', md: 'flex-end' },
                             alignItems: 'center',
                             width: '100%',
-                            maxWidth: {sm: '100%', md: 600},
+                            maxWidth: { sm: '100%', md: 600 },
                         }}
                     >
                         <Box
                             sx={{
-                                display: {xs: 'flex', md: 'none'},
+                                display: { xs: 'flex', md: 'none' },
                                 flexDirection: 'row',
                                 width: '100%',
                                 justifyContent: 'space-between',
                             }}
                         >
                             <Button
-                                startIcon={<ArrowBackRoundedIcon/>}
+                                startIcon={<ArrowBackRoundedIcon />}
                                 component="a"
                                 href="/material-ui/getting-started/templates/landing-page/"
-                                sx={{alignSelf: 'start'}}
+                                sx={{ alignSelf: 'start' }}
                             >
                                 Back to
                                 <img
@@ -237,11 +234,11 @@ export default function Checkout() {
                                     alt="Sitemark's logo"
                                 />
                             </Button>
-                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode}/>
+                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                         </Box>
                         <Box
                             sx={{
-                                display: {xs: 'none', md: 'flex'},
+                                display: { xs: 'none', md: 'flex' },
                                 flexDirection: 'column',
                                 justifyContent: 'space-between',
                                 alignItems: 'flex-end',
@@ -249,7 +246,7 @@ export default function Checkout() {
                                 height: 150,
                             }}
                         >
-                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode}/>
+                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                             <Stepper
                                 id="desktop-stepper"
                                 activeStep={activeStep}
@@ -261,8 +258,8 @@ export default function Checkout() {
                                 {steps.map((label) => (
                                     <Step
                                         sx={{
-                                            ':first-child': {pl: 0},
-                                            ':last-child': {pr: 0},
+                                            ':first-child': { pl: 0 },
+                                            ':last-child': { pr: 0 },
                                         }}
                                         key={label}
                                     >
@@ -274,7 +271,7 @@ export default function Checkout() {
                     </Box>
                     <Card
                         sx={{
-                            display: {xs: 'flex', md: 'none'},
+                            display: { xs: 'flex', md: 'none' },
                             width: '100%',
                         }}
                     >
@@ -284,7 +281,7 @@ export default function Checkout() {
                                 width: '100%',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                ':last-child': {pb: 2},
+                                ':last-child': { pb: 2 },
                             }}
                         >
                             <div>
@@ -295,7 +292,7 @@ export default function Checkout() {
                                     {totalMoneyWithTax}
                                 </Typography>
                             </div>
-                            <InfoMobile totalPrice={totalMoney}/>
+                            <InfoMobile totalPrice={totalMoney} />
                         </CardContent>
                     </Card>
                     <Box
@@ -304,28 +301,28 @@ export default function Checkout() {
                             flexDirection: 'column',
                             flexGrow: 1,
                             width: '100%',
-                            maxWidth: {sm: '100%', md: 600},
+                            maxWidth: { sm: '100%', md: 600 },
                             maxHeight: '720px',
-                            gap: {xs: 5, md: 'none'},
+                            gap: { xs: 5, md: 'none' },
                         }}
                     >
                         <Stepper
                             id="mobile-stepper"
                             activeStep={activeStep}
                             alternativeLabel
-                            sx={{display: {sm: 'flex', md: 'none'}}}
+                            sx={{ display: { sm: 'flex', md: 'none' } }}
                         >
                             {steps.map((label) => (
                                 <Step
                                     sx={{
-                                        ':first-child': {pl: 0},
-                                        ':last-child': {pr: 0},
-                                        '& .MuiStepConnector-root': {top: {xs: 6, sm: 12}},
+                                        ':first-child': { pl: 0 },
+                                        ':last-child': { pr: 0 },
+                                        '& .MuiStepConnector-root': { top: { xs: 6, sm: 12 } },
                                     }}
                                     key={label}
                                 >
                                     <StepLabel
-                                        sx={{'.MuiStepLabel-labelContainer': {maxWidth: '70px'}}}
+                                        sx={{ '.MuiStepLabel-labelContainer': { maxWidth: '70px' } }}
                                     >
                                         {label}
                                     </StepLabel>
@@ -346,7 +343,7 @@ export default function Checkout() {
                                         variant="contained"
                                         sx={{
                                             alignSelf: 'start',
-                                            width: {xs: '100%', sm: 'auto'},
+                                            width: { xs: '100%', sm: 'auto' },
                                         }}
                                     >
                                         Go to my orders
@@ -360,23 +357,23 @@ export default function Checkout() {
                                 <Box
                                     sx={{
                                         display: 'flex',
-                                        flexDirection: {xs: 'column-reverse', sm: 'row'},
+                                        flexDirection: { xs: 'column-reverse', sm: 'row' },
                                         justifyContent: activeStep !== 0 ? 'space-between' : 'flex-end',
                                         alignItems: 'end',
                                         flexGrow: 1,
                                         gap: 1,
-                                        pb: {xs: 12, sm: 0},
-                                        mt: {xs: 2, sm: 0},
+                                        pb: { xs: 12, sm: 0 },
+                                        mt: { xs: 2, sm: 0 },
                                         mb: '60px',
                                     }}
                                 >
                                     {activeStep !== 0 && (
                                         <Button
-                                            startIcon={<ChevronLeftRoundedIcon/>}
+                                            startIcon={<ChevronLeftRoundedIcon />}
                                             onClick={handleBack}
                                             variant="text"
                                             sx={{
-                                                display: {xs: 'none', sm: 'flex'},
+                                                display: { xs: 'none', sm: 'flex' },
                                             }}
                                         >
                                             Previous
@@ -385,12 +382,12 @@ export default function Checkout() {
 
                                     {activeStep !== 0 && (
                                         <Button
-                                            startIcon={<ChevronLeftRoundedIcon/>}
+                                            startIcon={<ChevronLeftRoundedIcon />}
                                             onClick={handleBack}
                                             variant="outlined"
                                             fullWidth
                                             sx={{
-                                                display: {xs: 'flex', sm: 'none'},
+                                                display: { xs: 'flex', sm: 'none' },
                                             }}
                                         >
                                             Previous
@@ -399,10 +396,10 @@ export default function Checkout() {
 
                                     <Button
                                         variant="contained"
-                                        endIcon={<ChevronRightRoundedIcon/>}
+                                        endIcon={<ChevronRightRoundedIcon />}
                                         onClick={() => handleNext()}
                                         sx={{
-                                            width: {xs: '100%', sm: 'fit-content'},
+                                            width: { xs: '100%', sm: 'fit-content' },
                                         }}
                                     >
                                         {activeStep === steps.length - 1 ? 'Place order' : 'Next'}

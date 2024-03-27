@@ -20,17 +20,17 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import {useEffect} from "react";
-import {RevenuesService} from "../../services/RevenuesService";
-import {useSelector} from "react-redux";
-import {Navigate} from "react-router-dom";
+import { useEffect } from "react";
+import { RevenuesService } from "../../services/RevenuesService";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link color="inherit" href="/">
+                aCatsuki
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -84,7 +84,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
@@ -93,20 +92,20 @@ export default function Dashboard() {
     const toggleDrawer = () => {
         setOpen(!open);
     };
-    const[total,setTotal] = React.useState(0)
-    const[totalMonth,setTotalMonth] = React.useState(0)
+    const [total, setTotal] = React.useState(0)
+    const [totalMonth, setTotalMonth] = React.useState(0)
 
     useEffect(() => {
-        (async()=>{
+        (async () => {
             const total = await RevenuesService.total()
             const totalMonth = await RevenuesService.totalMonth(new Date().getMonth() + 1)
             setTotal(total.profit)
             setTotalMonth(totalMonth.profit)
         })()
-    },[])
+    }, [])
 
-    if(!user || !user.id || user.role !== 'ADMIN'){
-        return <Navigate to={"/login"}/>
+    if (!user || !user.id || user.role !== 'ADMIN') {
+        return <Navigate to={"/login"} />
     }
 
     return (
@@ -116,10 +115,10 @@ export default function Dashboard() {
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
-                            pr: '24px', // keep right padding when drawer closed
+                            pr: '24px',
                         }}
                     >
-                        <IconButton
+                        {/* <IconButton
                             edge="start"
                             color="inherit"
                             aria-label="open drawer"
@@ -130,7 +129,7 @@ export default function Dashboard() {
                             }}
                         >
                             <MenuIcon />
-                        </IconButton>
+                        </IconButton> */}
                         <Typography
                             component="h1"
                             variant="h6"
@@ -140,6 +139,17 @@ export default function Dashboard() {
                         >
                             Dashboard
                         </Typography>
+                        <Link
+
+                            variant="h6"
+                            color="inherit"
+                            noWrap
+                            sx={{ flexGrow: 20, cursor: 'pointer', textDecoration: 'none' }}
+                            href="/"
+
+                        >
+                            Home
+                        </Link>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
                                 <NotificationsIcon />
@@ -191,7 +201,7 @@ export default function Dashboard() {
                                         height: 240,
                                     }}
                                 >
-                                    <Deposits label={"Tổng lợi nhuận"} total={total}/>
+                                    <Deposits label={"Total Profit"} total={total} />
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={4} lg={3}>
@@ -203,11 +213,10 @@ export default function Dashboard() {
                                         height: 240,
                                     }}
                                 >
-                                    <Deposits label={"Lợi nhuận tháng này"} total={totalMonth}/>
+                                    <Deposits label={"Profit this month"} total={totalMonth} />
                                 </Paper>
 
                             </Grid>
-                            {/* Recent Orders */}
                             <Grid item xs={12}>
                                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                                     <Orders />

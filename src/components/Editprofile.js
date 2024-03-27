@@ -1,30 +1,27 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 
 
 import "../styles/Editprofile.css";
-import {useDispatch, useSelector} from "react-redux";
-import {UsersService} from "../services/UsersService";
-import {editUser} from "../features/users/UsersSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { UsersService } from "../services/UsersService";
+import { editUser } from "../features/users/UsersSlice";
 
 
 const Editprofile = () => {
 
-    const [curUser,setCurUser] = useState()
+    const [curUser, setCurUser] = useState()
     const user = useSelector((state) => state.users?.value);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         setCurUser(user)
-    },[])
+    }, [])
 
     const handleEditProfile = () => {
         UsersService.edit(curUser).then((res) => {
             dispatch(editUser(curUser))
         })
-    }
-    const handleResetProfile = () => {
-        setCurUser(user)
     }
 
     return (
@@ -51,7 +48,7 @@ const Editprofile = () => {
                     variant="outlined"
                     sx={{ width: 700 }}
                     value={curUser?.first_name}
-                    onChange={(e) => setCurUser({...curUser, first_name: e.target.value})}
+                    onChange={(e) => setCurUser({ ...curUser, first_name: e.target.value })}
                 />
                 <p>Last Name</p>
                 <TextField
@@ -59,7 +56,7 @@ const Editprofile = () => {
                     variant="outlined"
                     sx={{ width: 700 }}
                     value={curUser?.last_name}
-                    onChange={(e) => setCurUser({...curUser, last_name: e.target.value})}
+                    onChange={(e) => setCurUser({ ...curUser, last_name: e.target.value })}
                 />
                 <p>Email</p>
                 <TextField
@@ -67,7 +64,7 @@ const Editprofile = () => {
                     variant="outlined"
                     sx={{ width: 700 }}
                     value={curUser?.email}
-                    onChange={(e) => setCurUser({...curUser, email: e.target.value})}
+                    onChange={(e) => setCurUser({ ...curUser, email: e.target.value })}
                 />
                 <p>Username</p>
                 <TextField
@@ -75,10 +72,19 @@ const Editprofile = () => {
                     variant="outlined"
                     sx={{ width: 700 }}
                     value={curUser?.username}
-                    onChange={(e) => setCurUser({...curUser, username: e.target.value})}
+                    onChange={(e) => setCurUser({ ...curUser, username: e.target.value })}
+                />
+                <p>Password</p>
+                <TextField
+                    // label="Password"
+                    variant="outlined"
+                    sx={{ width: 700 }}
+                    value={curUser?.password}
+                    onChange={(e) => setCurUser({ ...curUser, password: e.target.value })}
                 />
 
-                <button className="edit-profile" onClick={handleEditProfile} >
+
+                <button className="edit" onClick={handleEditProfile} >
                     Edit Profile
                 </button>
             </div>

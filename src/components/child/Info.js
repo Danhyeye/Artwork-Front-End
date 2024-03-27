@@ -19,7 +19,7 @@ const products = [
     },
 ];
 
-function Info({totalPrice, products = products}) {
+function Info({ totalPrice, products = products }) {
     const totalMoney = products.reduce((total, artwork) => total + artwork.price, 0);
     const tax = totalMoney * 0.2;
     const totalMoneyWithTax = totalMoney + tax;
@@ -27,21 +27,21 @@ function Info({totalPrice, products = products}) {
     return (
         <React.Fragment>
             <Typography variant="subtitle2" color="text.secondary">
-                Tổng tiền cần thanh toán : {totalMoney} cộng 20% thuế VAT
+                Total amount to be paid: {totalMoney} & 20% VAT
             </Typography>
             <Typography variant="h4" gutterBottom>
-                {totalMoneyWithTax}
+                {totalMoneyWithTax}$
             </Typography>
             <List disablePadding>
                 {products.map((product) => (
-                    <ListItem key={product.id} sx={{py: 1, px: 0}}>
+                    <ListItem key={product.id} sx={{ py: 1, px: 0 }}>
                         <ListItemText
-                            sx={{mr: 2}}
+                            sx={{ mr: 2 }}
                             primary={product.title}
                             secondary={product.description}
                         />
                         <Typography variant="body1" fontWeight="medium">
-                            {product.price}
+                            {product.price}$
                         </Typography>
                     </ListItem>
                 ))}

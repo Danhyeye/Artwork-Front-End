@@ -26,7 +26,7 @@ const FormGrid = styled('div')(() => ({
     flexDirection: 'column',
 }));
 
-export default function PaymentForm({order,onChangeOrder}) {
+export default function PaymentForm({ order, onChangeOrder }) {
     const [paymentType, setPaymentType] = React.useState('creditCard');
     const [cardNumber, setCardNumber] = React.useState('');
     const [cvv, setCvv] = React.useState('');
@@ -34,7 +34,7 @@ export default function PaymentForm({order,onChangeOrder}) {
 
     const handlePaymentTypeChange = (event) => {
         setPaymentType(event.target.value);
-        onChangeOrder(prev=>({...prev,paymentType:event.target.value}))
+        onChangeOrder(prev => ({ ...prev, paymentType: event.target.value }))
     };
 
     const handleCardNumberChange = (event) => {
@@ -42,7 +42,7 @@ export default function PaymentForm({order,onChangeOrder}) {
         const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
         if (value.length <= 16) {
             setCardNumber(formattedValue);
-            onChangeOrder(prev=>({...prev,card_number:formattedValue}))
+            onChangeOrder(prev => ({ ...prev, card_number: formattedValue }))
         }
     };
 
@@ -50,7 +50,7 @@ export default function PaymentForm({order,onChangeOrder}) {
         const value = event.target.value.replace(/\D/g, '');
         if (value.length <= 3) {
             setCvv(value);
-            onChangeOrder(prev=>({...prev,cvv:value}))
+            onChangeOrder(prev => ({ ...prev, cvv: value }))
         }
     };
 
@@ -59,7 +59,7 @@ export default function PaymentForm({order,onChangeOrder}) {
         const formattedValue = value.replace(/(\d{2})(?=\d{2})/, '$1/');
         if (value.length <= 4) {
             setExpirationDate(formattedValue);
-            onChangeOrder(prev=>({...prev,expiry_date:formattedValue}))
+            onChangeOrder(prev => ({ ...prev, expiry_date: formattedValue }))
         }
     };
 
@@ -91,7 +91,7 @@ export default function PaymentForm({order,onChangeOrder}) {
                         <CardActionArea onClick={() => setPaymentType('creditCard')}>
                             <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <CreditCardRoundedIcon color="primary" fontSize="small" />
-                                <Typography fontWeight="medium">Thẻ tín dụng</Typography>
+                                <Typography fontWeight="medium">Credit Card</Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
@@ -110,7 +110,7 @@ export default function PaymentForm({order,onChangeOrder}) {
                         <CardActionArea onClick={() => setPaymentType('bankTransfer')}>
                             <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <AccountBalanceRoundedIcon color="primary" fontSize="small" />
-                                <Typography fontWeight="medium">Tài khoản ngân hàng</Typography>
+                                <Typography fontWeight="medium">Bank Account</Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
@@ -140,7 +140,7 @@ export default function PaymentForm({order,onChangeOrder}) {
                         }}
                     >
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Typography variant="subtitle2">Tín dụng</Typography>
+                            <Typography variant="subtitle2">Credit</Typography>
                             <CreditCardRoundedIcon sx={{ color: 'text.secondary' }} />
                         </Box>
                         <SimCardRoundedIcon
@@ -160,7 +160,7 @@ export default function PaymentForm({order,onChangeOrder}) {
                         >
                             <FormGrid sx={{ flexGrow: 1 }}>
                                 <FormLabel htmlFor="card-number" required>
-                                    Số thẻ
+                                    Card number
                                 </FormLabel>
                                 <OutlinedInput
                                     id="card-number"
@@ -188,7 +188,7 @@ export default function PaymentForm({order,onChangeOrder}) {
                         <Box sx={{ display: 'flex', gap: 2 }}>
                             <FormGrid sx={{ flexGrow: 1 }}>
                                 <FormLabel htmlFor="card-name" required>
-                                    Tên
+                                    Card Holder
                                 </FormLabel>
                                 <OutlinedInput
                                     id="card-name"
@@ -196,12 +196,12 @@ export default function PaymentForm({order,onChangeOrder}) {
                                     placeholder="Card holder"
                                     required
                                     value={order.card_name}
-                                    onChange={(e)=>onChangeOrder(prev=>({...prev,card_name:e.target.value}))}
+                                    onChange={(e) => onChangeOrder(prev => ({ ...prev, card_name: e.target.value }))}
                                 />
                             </FormGrid>
                             <FormGrid sx={{ flexGrow: 1 }}>
                                 <FormLabel htmlFor="card-expiration" required>
-                                    Ngày hết hạn
+                                    Expiration date
                                 </FormLabel>
                                 <OutlinedInput
                                     id="card-expiration"
@@ -214,10 +214,7 @@ export default function PaymentForm({order,onChangeOrder}) {
                             </FormGrid>
                         </Box>
                     </Box>
-                    <FormControlLabel
-                        control={<Checkbox name="saveCard" />}
-                        label="Lưu thẻ tín dụng cho lần sau"
-                    />
+
                 </Box>
             )}
 
@@ -243,7 +240,7 @@ export default function PaymentForm({order,onChangeOrder}) {
                             Bank:
                         </Typography>
                         <Typography variant="body1" fontWeight="medium">
-                            Mastercredit
+                            Vietcombank
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
@@ -251,17 +248,10 @@ export default function PaymentForm({order,onChangeOrder}) {
                             Account number:
                         </Typography>
                         <Typography variant="body1" fontWeight="medium">
-                            123456789
+                            1023896845
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography variant="body1" color="text.secondary">
-                            Routing number:
-                        </Typography>
-                        <Typography variant="body1" fontWeight="medium">
-                            987654321
-                        </Typography>
-                    </Box>
+
                 </Box>
             )}
         </Stack>

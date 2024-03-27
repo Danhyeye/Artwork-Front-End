@@ -2,15 +2,15 @@ import * as React from 'react';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import {styled} from '@mui/system';
-import {useSelector} from "react-redux";
+import { styled } from '@mui/system';
+import { useSelector } from "react-redux";
 
 const FormGrid = styled(Grid)(() => ({
     display: 'flex',
     flexDirection: 'column',
 }));
 
-export default function AddressForm({order, onChangeOrder}) {
+export default function AddressForm({ order, onChangeOrder }) {
     const user = useSelector(state => state.users?.value);
     return (
         <Grid container spacing={3}>
@@ -22,10 +22,10 @@ export default function AddressForm({order, onChangeOrder}) {
                     id="first-name"
                     name="first-name"
                     type="name"
-                    placeholder={user?.first_name || "Nhập họ của bạn"}
+                    placeholder={user?.first_name}
                     autoComplete="first name"
                     value={order.first_name}
-                    onChange={(e) => onChangeOrder(prev => ({...prev, first_name: e.target.value}))}
+                    onChange={(e) => onChangeOrder(prev => ({ ...prev, first_name: e.target.value }))}
                     required
                 />
             </FormGrid>
@@ -37,8 +37,8 @@ export default function AddressForm({order, onChangeOrder}) {
                     id="last-name"
                     name="last-name"
                     type="last-name"
-                    onChagne={e => onChangeOrder(prev => ({...prev, last_name: e.target.value}))}
-                    placeholder={user?.last_name || "Nhập tên của bạn"}
+                    onChagne={e => onChangeOrder(prev => ({ ...prev, last_name: e.target.value }))}
+                    placeholder={user?.last_name}
                     autoComplete="last name"
                     required
                 />
@@ -52,7 +52,7 @@ export default function AddressForm({order, onChangeOrder}) {
                     name="address_line_1"
                     type="address_line_1"
                     value={order.address_line_1}
-                    onChange={e => onChangeOrder(prev => ({...prev, address_line_1: e.target.value}))}
+                    onChange={e => onChangeOrder(prev => ({ ...prev, address_line_1: e.target.value }))}
                     placeholder="Street name and number"
                     autoComplete="shipping address-line1"
                     required
@@ -65,7 +65,7 @@ export default function AddressForm({order, onChangeOrder}) {
                     name="address_line_2"
                     type="address_line_2"
                     value={order.address_line_2}
-                    onChange={e => onChangeOrder(prev => ({...prev, address_line_2: e.target.value}))}
+                    onChange={e => onChangeOrder(prev => ({ ...prev, address_line_2: e.target.value }))}
                     placeholder="Apartment, suite, unit, etc. (optional)"
                     autoComplete="shipping address-line2"
                     required
@@ -80,8 +80,8 @@ export default function AddressForm({order, onChangeOrder}) {
                     name="city"
                     type="city"
                     value={order.city}
-                    onChange={e => onChangeOrder(prev => ({...prev, city: e.target.value}))}
-                    placeholder="TP. Hồ Chí Minh"
+                    onChange={e => onChangeOrder(prev => ({ ...prev, city: e.target.value }))}
+                    placeholder="Ho Chi Minh"
                     autoComplete="City"
                     required
                 />
@@ -95,8 +95,8 @@ export default function AddressForm({order, onChangeOrder}) {
                     name="state"
                     type="state"
                     value={order.state}
-                    onChange={e => onChangeOrder(prev => ({...prev, state: e.target.value}))}
-                    placeholder="NY"
+                    onChange={e => onChangeOrder(prev => ({ ...prev, state: e.target.value }))}
+                    placeholder="Ho Chi Minh"
                     autoComplete="State"
                     required
                 />
@@ -110,8 +110,8 @@ export default function AddressForm({order, onChangeOrder}) {
                     name="zip"
                     type="zip"
                     value={order.zip}
-                    onChange={e => onChangeOrder(prev => ({...prev, zip: e.target.value, postal_code: e.target.value}))}
-                    placeholder="12345"
+                    onChange={e => onChangeOrder(prev => ({ ...prev, zip: e.target.value, postal_code: e.target.value }))}
+                    placeholder="700000"
                     autoComplete="shipping postal-code"
                     required
                 />
@@ -124,10 +124,10 @@ export default function AddressForm({order, onChangeOrder}) {
                     id="country"
                     name="country"
                     type="country"
-                    placeholder="Việt Nam"
+                    placeholder="Viet Nam"
                     autoComplete="shipping country"
                     value={order.country}
-                    onChange={e => onChangeOrder(prev => ({...prev, country: e.target.value}))}
+                    onChange={e => onChangeOrder(prev => ({ ...prev, country: e.target.value }))}
                     required
                 />
             </FormGrid>
