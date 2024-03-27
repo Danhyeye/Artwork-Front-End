@@ -12,9 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from "react";
-import { UsersService } from "../services/UsersService";
-import { useNavigate } from "react-router-dom";
+import {useState} from "react";
+import {UsersService} from "../services/UsersService";
+import {useNavigate} from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -36,21 +36,15 @@ export default function SignUp() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        UsersService.register(user).then((response) => {
-            if (response && response.message) {
-                alert(response.message);
-            }
-
-        }).catch((error) => {
-            console.error("Error during registration:", error);
+        UsersService.register(user).then(()=>{
+            navigate('/login')
         });
     };
 
-
-    const [user, setUser] = useState({
+    const [user,setUser] = useState({
         firstName: '',
         lastName: '',
-        username: '',
+        username:'',
         email: '',
         password: ''
     });
@@ -84,7 +78,7 @@ export default function SignUp() {
                                     fullWidth
                                     id="firstName"
                                     value={user.firstName}
-                                    onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+                                    onChange={(e) => setUser({...user,firstName: e.target.value})}
                                     label="First Name"
                                     autoFocus
                                 />
@@ -95,7 +89,7 @@ export default function SignUp() {
                                     fullWidth
                                     id="lastName"
                                     value={user.lastName}
-                                    onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+                                    onChange={(e) => setUser({...user,lastName: e.target.value})}
                                     label="Last Name"
                                     name="lastName"
                                     autoComplete="family-name"
@@ -107,7 +101,7 @@ export default function SignUp() {
                                     fullWidth
                                     id="email"
                                     value={user.email}
-                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+                                    onChange={(e) => setUser({...user,email: e.target.value})}
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
@@ -119,7 +113,7 @@ export default function SignUp() {
                                     fullWidth
                                     id="username"
                                     value={user.username}
-                                    onChange={(e) => setUser({ ...user, username: e.target.value })}
+                                    onChange={(e) => setUser({...user,username: e.target.value})}
                                     label="Username"
                                     name="username"
                                     autoComplete="username"
@@ -134,7 +128,7 @@ export default function SignUp() {
                                     type="password"
                                     id="password"
                                     value={user.password}
-                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                    onChange={(e) => setUser({...user,password: e.target.value})}
                                     autoComplete="new-password"
                                 />
                             </Grid>

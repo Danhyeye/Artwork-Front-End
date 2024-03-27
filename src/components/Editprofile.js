@@ -81,9 +81,6 @@ const Editprofile = () => {
                 <button className="edit-profile" onClick={handleEditProfile} >
                     Edit Profile
                 </button>
-                <button className="edit-profile" onClick={handleResetProfile} >
-                    Reset Profile
-                </button>
             </div>
         </div>
     );

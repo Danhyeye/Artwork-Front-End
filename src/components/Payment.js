@@ -103,7 +103,7 @@ export default function Checkout() {
                 title: artwork.title,
                 price: artwork.price,
                 seller_name: user.first_name + " " + user.last_name,
-                created_by: artwork.created_by
+                created_by: artwork.created_by,
             }))
             setArtworks(response);
             setOrder(prev => ({...prev, user_id: user.id, artworks: artworksSaved}));
@@ -122,9 +122,9 @@ export default function Checkout() {
             setLoading(true)
             //call api
             const response = await OrdersService.createOrder(order);
-            artworks.forEach(artwork=>{
-                DownloadImgService.downloadImage(artwork.src);
-            })
+            const imageUrls =  artworks.map(artwork=>artwork.src)
+            DownloadImgService.downloadImage(imageUrls);
+
             setActiveStep(activeStep + 1);
             setLoading(false)
         }

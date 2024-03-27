@@ -3,6 +3,7 @@ import artworks from "../data/Listartworks";
 
 const initialArtwork = JSON.parse(localStorage.getItem("artworks")) || artworks;
 
+
 export const userSlice = createSlice({
     name: "artworks",
     initialState: { value: initialArtwork },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Collapse,
     Paper,
@@ -14,13 +14,13 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { OrdersThunk } from "../features/orders/OrdersThunk";
+import {useDispatch, useSelector} from "react-redux";
+import {OrdersThunk} from "../features/orders/OrdersThunk";
 import Grid from "@mui/material/Grid";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 const createData = (id, name, date, amount) => {
-    return { id, name, date, amount };
+    return {id, name, date, amount};
 };
 
 const rows = [
@@ -33,13 +33,13 @@ const OrderList = () => {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.users?.value);
     const orders = useSelector(state => state.orders?.value || [])
-    console.log("orders", orders)
+    console.log("orders",orders)
 
     useEffect(() => {
         if (user && user?.id) dispatch(OrdersThunk.getAllOrders(user?.id))
     }, [])
 
-    if (!user || !user.id) return <Navigate to={'/login'} />
+    if(!user || !user.id) return <Navigate to={'/login'} />
     return (
         <Box sx={{
             margin: 'auto',
@@ -52,20 +52,21 @@ const OrderList = () => {
         }}>
             <TableContainer
             >
-                <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 2 }}>Danh sách đơn hàng</Typography>
+                <Typography variant="h4" component="h2" gutterBottom sx={{mb: 2}}>Danh sách đơn hàng</Typography>
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell>ID</TableCell>
-                            <TableCell align="right">Tên khách hàng</TableCell>
-                            <TableCell align="right">Địa chỉ</TableCell>
+                            <TableCell align="center">Tên khách hàng</TableCell>
+                            <TableCell align="left">Địa chỉ</TableCell>
+                            <TableCell align="center">Mã bưu điện</TableCell>
                             <TableCell align="right">Tổng Tiền</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {orders.map((row) => (
-                            <RowComponent key={row.id} row={row} />
+                            <RowComponent key={row.id} row={row}/>
                         ))}
                     </TableBody>
                 </Table>
@@ -74,7 +75,7 @@ const OrderList = () => {
     );
 };
 
-function RowComponent({ row }) {
+function RowComponent({row}) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -82,18 +83,19 @@ function RowComponent({ row }) {
             <TableRow>
                 <TableCell>
                     <IconButton size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
                     {row.id}
                 </TableCell>
-                <TableCell align="right">{`${row.first_name} ${row.last_name}`}</TableCell>
-                <TableCell align="right">{row.address_line_1 || row.address_line_2}</TableCell>
+                <TableCell align="center">{`${row.first_name} ${row.last_name}`}</TableCell>
+                <TableCell align="left">{row.address_line_1 || row.address_line_2}</TableCell>
+                <TableCell align="center">{row.postal_code}</TableCell>
                 <TableCell align="right">{row.total_price}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography variant="h6" gutterBottom component="div">

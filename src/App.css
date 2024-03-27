@@ -1,9 +1,9 @@
 /* Trong file styles.css của bạn */
 .multiLineEllipsis {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Số dòng bạn muốn hiển thị */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Số dòng bạn muốn hiển thị */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }

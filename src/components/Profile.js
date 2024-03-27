@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import "../styles/Profile.css";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import Avatar from "@mui/material/Avatar";
-import { ArtworksService } from "../services/ArtworksService";
-import { useSelector } from "react-redux";
+import {ArtworksService} from "../services/ArtworksService";
+import {useSelector} from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
-import { stringAvatar } from "../utils/string";
+import {Alert} from "@mui/material";
+import {stringAvatar} from "../utils/string";
 
 const Profile = () => {
 
@@ -54,10 +54,10 @@ const Profile = () => {
 
     return (
         <>
-            <div className='profile' style={{ zIndex: -1 }}>
+            <div className='profile'>
                 <h1 className='user-name'>{user.first_name + " " + user.last_name}</h1>
 
-                <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)} sx={{ width: 52, height: 52 }} />
+                <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)} sx={{width: 52, height: 52}}/>
                 <Link to="/edit-profile">
                     <button className='edit-profile'>Edit Profile</button>
                 </Link>
@@ -70,7 +70,7 @@ const Profile = () => {
                 {selectedArtworks?.map((art, index) => (
                     <Link to={`/artwork/${art.id}`} key={art.id}>
                         <div id={art.id} className={`artwork artwork-${index % 4}`}>
-                            <img src={art.src} alt={art.src} />
+                            <img src={art.src} alt={art.src}/>
                             <div className='overlay'>
                                 <div className='save-btn' onClick={(e) => {
                                     e.preventDefault();
@@ -80,13 +80,13 @@ const Profile = () => {
                                 </div>
                                 <div className='hidden-tag' alt="Danhyeye"
                                 ><
-                                        HighlightOffIcon onClick={(e) => {
-                                            e.preventDefault();
-                                            // dispatch(ArtworksThunk.deleteArtwork(art.id))
-                                            //     .then(() => dispatch(deleteArtwork(art.id)));
-                                        }} />
+                                    HighlightOffIcon onClick={(e) => {
+                                    e.preventDefault();
+                                    // dispatch(ArtworksThunk.deleteArtwork(art.id))
+                                    //     .then(() => dispatch(deleteArtwork(art.id)));
+                                }}/>
                                 </div>
-                                <div className='avatar-user'><Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)} sx={{ width: 24, height: 24, fontSize: 12 }} /></div>
+                                <div className='avatar-user'><Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)} sx={{width: 24, height: 24,fontSize:12}}/></div>
                             </div>
                         </div>
                     </Link>

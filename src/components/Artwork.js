@@ -1,29 +1,29 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, {useCallback, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import "../styles/Artwork.css";
-import { useDispatch, useSelector } from "react-redux"
-import { addToCart } from "../features/carts/CartsSlice";
-import { ArtworksService } from "../services/ArtworksService";
-import { CartsThunk } from "../features/carts/CartsThunk";
-import { ArtworksThunk } from "../features/artworks/ArtworksThunk";
-import { deleteArtwork } from "../features/artworks/ArtworksSlice";
-import { CommentsService } from "../services/CommentsService";
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import {useDispatch, useSelector} from "react-redux"
+import {addToCart} from "../features/carts/CartsSlice";
+import {ArtworksService} from "../services/ArtworksService";
+import {CartsThunk} from "../features/carts/CartsThunk";
+import {ArtworksThunk} from "../features/artworks/ArtworksThunk";
+import {deleteArtwork} from "../features/artworks/ArtworksSlice";
+import {CommentsService} from "../services/CommentsService";
+import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
-import { stringAvatar } from "../utils/string";
-import { formatDistanceToNow } from 'date-fns';
-import { vi } from 'date-fns/locale';
+import {stringAvatar} from "../utils/string";
+import {formatDistanceToNow} from 'date-fns';
+import {vi} from 'date-fns/locale';
 import Typography from "@mui/material/Typography";
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Artwork = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const [thisArtwork, setThisArtwork] = useState();
 
     useEffect(() => {
@@ -74,7 +74,7 @@ const Artwork = () => {
             comment: myComments,
             id
         };
-        setComments(prev => prev.map(cmt => cmt.id === id ? { ...cmt, comment: myComments } : cmt));
+        setComments(prev => prev.map(cmt => cmt.id === id ? {...cmt, comment: myComments} : cmt));
         setMyComments("")
         CommentsService.updateComment(comment).then((res) => {
             console.log(res)
@@ -161,7 +161,7 @@ const Artwork = () => {
     const [alertContent, setAlertContent] = useState("Vui lòng đăng nhập để có thể thực hiện chức năng này")
     return (
         <>
-            <main className="pin-container" sx={{ height: '90vh' }}>
+            <main className="pin-container" sx={{height: '90vh'}}>
                 <Dialog
                     open={openDialog}
                     onClose={handleCloseDialog}
@@ -186,20 +186,20 @@ const Artwork = () => {
 
                 {thisArtwork && (
                     <div key={thisArtwork.id} className="artwork-item">
-                        <img src={thisArtwork.src} alt={`Artwork ${thisArtwork.id}`} />
+                        <img src={thisArtwork.src} alt={`Artwork ${thisArtwork.id}`}/>
                     </div>
                 )}
                 <Box className="pin-title">
                     {thisArtwork && (
                         <div className="pin-button">
                             <LoyaltyIcon
-                                sx={{ fontSize: 30, m: 2, cursor: "pointer" }}
+                                sx={{fontSize: 30, m: 2, cursor: "pointer"}}
                                 onClick={() => handleAddToCart(thisArtwork.id, thisArtwork.created_by)}
                             />
                             {
                                 user.id === thisArtwork.created_by && (
                                     <DeleteIcon
-                                        sx={{ fontSize: 30, mr: 4, cursor: "pointer" }}
+                                        sx={{fontSize: 30, mr: 4, cursor: "pointer"}}
                                         onClick={(e) => {
                                             e.preventDefault();
                                             if (window.confirm("Bạn có chắc là muốn xóa artwork này?")) {
@@ -232,10 +232,10 @@ const Artwork = () => {
                                 <div>
                                     <div className="user">
                                         <Avatar {...stringAvatar(thisArtwork?.first_name + " " + thisArtwork?.last_name)}
-                                            sx={{
-                                                width: 40, height: 40, fontSize: 18,
-                                                m: 2
-                                            }} />
+                                                sx={{
+                                                    width: 40, height: 40, fontSize: 18,
+                                                    m: 2
+                                                }}/>
                                         <div className="user-follower">
                                             <p className="artist">{thisArtwork.first_name + " " + thisArtwork.last_name}</p>
                                         </div>
@@ -249,28 +249,28 @@ const Artwork = () => {
                                     <p className="text-comment">Comment</p>
 
                                     <CommentSection comments={comments} handleDeleteComment={handleDeleteComment}
-                                        setMyComments={setMyComments}
-                                        user={user} setUpdateFlag={setUpdateFlag}
-                                        setSelectedComment={setSelectedComment} />
+                                                    setMyComments={setMyComments}
+                                                    user={user} setUpdateFlag={setUpdateFlag}
+                                                    setSelectedComment={setSelectedComment}/>
 
                                     <div className="ur-comment">
                                         <div className="react">
                                             <p className="think">What do you think?</p>
                                             <button
                                                 className="like"
-                                                sx={{ ":active": { color: "red[500]" } }}
+                                                sx={{":active": {color: "red[500]"}}}
                                             ></button>
                                         </div>
                                         <div className="add-comment">
                                             <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
-                                                sx={{
-                                                    width: 40, height: 40, fontSize: 18,
-                                                    m: 2
-                                                }} />
+                                                    sx={{
+                                                        width: 40, height: 40, fontSize: 18,
+                                                        m: 2
+                                                    }}/>
                                             <Box
                                                 component="form"
                                                 sx={{
-                                                    "& > :not(style)": { m: 2, width: "25ch" },
+                                                    "& > :not(style)": {m: 2, width: "25ch"},
                                                 }}
                                                 noValidate
                                                 autoComplete="off"
@@ -286,15 +286,15 @@ const Artwork = () => {
                                                     <TextField
                                                         label="Update comment"
                                                         variant="outlined"
-                                                        sx={{ width: 360, height: 35, marginBottom: 2.5 }}
+                                                        sx={{width: 360, height: 35, marginBottom: 2.5}}
                                                         value={myComments}
                                                         onChange={handleChangeComment}
                                                     />
                                                     <button className="send-button" type="submit">
-                                                        <SendIcon />
+                                                        <SendIcon/>
                                                     </button>
                                                     <button
-                                                        style={{ marginLeft: "10px" }}
+                                                        style={{marginLeft: "10px"}}
                                                         onClick={handleCloseUpdate}
                                                     >
                                                         Cancel
@@ -307,12 +307,12 @@ const Artwork = () => {
                                                     <TextField
                                                         label="Add a comment"
                                                         variant="outlined"
-                                                        sx={{ width: 360, height: 35, marginBottom: 2.5 }}
+                                                        sx={{width: 360, height: 35, marginBottom: 2.5}}
                                                         value={myComments}
                                                         onChange={handleChangeComment}
                                                     />
                                                     <button className="send-button" type="submit">
-                                                        <SendIcon />
+                                                        <SendIcon/>
                                                     </button>
                                                 </form>
                                             )}
@@ -323,7 +323,7 @@ const Artwork = () => {
                         )}
                     </div>
                 </Box>
-            </main >
+            </main>
             <Snackbar
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -345,7 +345,7 @@ const Artwork = () => {
 }
 
 
-function CommentSection({ comments, user, handleDeleteComment, setUpdateFlag, setSelectedComment, setMyComments }) {
+function CommentSection({comments, user, handleDeleteComment, setUpdateFlag, setSelectedComment, setMyComments}) {
 
     const stringAvatar = (name) => {
         return {
@@ -374,25 +374,25 @@ function CommentSection({ comments, user, handleDeleteComment, setUpdateFlag, se
                     borderRadius: '8px',
                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                 }}>
-                    <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
-                        <Box sx={{ display: 'flex', alignItems: "center" }}>
+                    <Box sx={{display: 'flex', justifyContent: "space-between"}}>
+                        <Box sx={{display: 'flex', alignItems: "center"}}>
                             <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
-                                sx={{ width: 40, height: 40, fontSize: 18, mr: 2 }} />
+                                    sx={{width: 40, height: 40, fontSize: 18, mr: 2}}/>
                             <Box>
                                 <Typography sx={{
                                     fontWeight: 'bold',
                                     color: '#333',
                                     mb: 0.5
                                 }}>{comment.first_name + " " + comment.last_name}</Typography>
-                                <Typography sx={{ color: '#666', fontSize: '0.875rem' }}>
-                                    {formatDistanceToNow(new Date(comment.date), { addSuffix: true, locale: vi })}
+                                <Typography sx={{color: '#666', fontSize: '0.875rem'}}>
+                                    {formatDistanceToNow(new Date(comment.date), {addSuffix: true, locale: vi})}
                                 </Typography>
                             </Box>
                         </Box>
                         {comment.user_id === user.id && (
-                            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2, gap: "10px" }}>
+                            <Box sx={{display: "flex", justifyContent: "flex-end", mt: 2, gap: "10px"}}>
                                 <Button variant="text" size="small" color="error"
-                                    onClick={() => handleDeleteComment(comment.id)}>
+                                        onClick={() => handleDeleteComment(comment.id)}>
                                     Delete
                                 </Button>
                                 <Button variant="text" size="small" color="primary" onClick={() => {
@@ -406,7 +406,7 @@ function CommentSection({ comments, user, handleDeleteComment, setUpdateFlag, se
                         )}
                     </Box>
 
-                    <Typography sx={{ mt: 1.5, color: '#444', fontSize: '0.975rem' }}>
+                    <Typography sx={{mt: 1.5, color: '#444', fontSize: '0.975rem'}}>
                         {comment.comment}
                     </Typography>
                 </Box>
