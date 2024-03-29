@@ -18,15 +18,14 @@ import { Link, Navigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 const Cart = () => {
-    const carts = useSelector((state) => state.carts.value || {});
+    const carts = useSelector((state) => state.carts.value || []);
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users?.value);
-    const [open, setOpen] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     useEffect(() => {
         if (!user || !user.id) return;
-        console.log(user, user?.id)
         dispatch(CartsThunk.getAllCarts(user.id));
     }, []);
 
@@ -36,34 +35,33 @@ const Cart = () => {
         };
     };
 
-    if (!user || !user.id) return <Navigate to={'/login'} />
-    const handleClickDelete = (cart) => {
-        dispatch(CartsThunk.deleteCart(cart.id)).then(() => dispatch(deleteFromCart({ id: cart.id })))
-        setOpen(true);
+    const handleClickDelete = async (cart) => {
+        await dispatch(CartsThunk.deleteCart(cart.id));
+        dispatch(deleteFromCart({ id: cart.id }));
+        setOpenSnackbar(true);
     };
 
-    const handleClose = (event, reason) => {
+    const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        setOpen(false);
+        setOpenSnackbar(false);
     };
 
     const action = (
         <React.Fragment>
-            <Button onClick={handleClose}>
-            </Button>
             <IconButton
                 size="small"
                 aria-label="close"
                 color="inherit"
-                onClick={handleClose}
+                onClick={handleCloseSnackbar}
             >
                 <CloseIcon fontSize="small" />
             </IconButton>
         </React.Fragment>
     );
+
+    if (!user || !user.id) return <Navigate to={'/login'} />
 
     return (
         <>
@@ -126,21 +124,14 @@ const Cart = () => {
                                             <img alt='image' src={cart.src} />
                                         </div>
                                         <Snackbar
-                                            open={open}
+                                            open={openSnackbar}
                                             autoHideDuration={6000}
-                                            onClose={handleClose}
-                                            message="Success"
-                                            action={action}
-                                        />
-                                        <Snackbar
-                                            open={open}
-                                            autoHideDuration={6000}
-                                            onClose={handleClose}
-                                            message="Success"
+                                            onClose={handleCloseSnackbar}
+                                            message="The artwork has been removed from the cart"
                                             action={action}
                                         />
                                     </div>
-                                    <Button onClick={() => handleClickDelete(cart)} sx={{ position: "absolute", top: 0, right: 0, mt: 16, mr: 4, zIndex: -1 }}><ClearIcon /></Button>
+                                    <Button onClick={() => handleClickDelete(cart)} sx={{ position: "absolute", top: 0, right: 0, mt: 16, mr: 4, zIndex: 0, cursor: 'pointer' }}><ClearIcon /></Button>
                                 </Box>
                             )
                         }

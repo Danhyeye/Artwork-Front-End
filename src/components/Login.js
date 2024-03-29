@@ -11,11 +11,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useDispatch, useSelector} from "react-redux";
-import {UsersThunk} from "../features/users/UsersThunk";
-import {Navigate, useNavigate} from "react-router-dom";
-import {OrdersThunk} from "../features/orders/OrdersThunk";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch, useSelector } from "react-redux";
+import { UsersThunk } from "../features/users/UsersThunk";
+import { Navigate, useNavigate } from "react-router-dom";
+import { OrdersThunk } from "../features/orders/OrdersThunk";
 
 
 function Copyright(props) {
@@ -44,7 +44,7 @@ export default function SignIn() {
     const navigate = useNavigate();
 
     const user = useSelector((state) => state.users?.value);
-    const [url,setUrl] = React.useState('');
+    const [url, setUrl] = React.useState('');
 
 
 
@@ -64,18 +64,18 @@ export default function SignIn() {
         });
     };
 
-    if(url !=='' && (!user || !user.id)){
-        alert("Login failed")
+    if (url !== '' && (!user || !user.id)) {
+        alert("Email or password is incorrect, please log in again")
     }
-    if(url !== '' && user  && user.id){
-        return <Navigate to={url}/>
+    if (url !== '' && user && user.id) {
+        return <Navigate to={url} />
     }
 
     return (
         <div className='login'>
             <ThemeProvider theme={defaultTheme}>
                 <Container component="main" maxWidth="xs">
-                    <CssBaseline/>
+                    <CssBaseline />
                     <Box
                         sx={{
                             marginTop: 8,
@@ -84,13 +84,13 @@ export default function SignIn() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                            <LockOutlinedIcon/>
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
                                 required
@@ -112,14 +112,14 @@ export default function SignIn() {
                                 autoComplete="current-password"
                             />
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary"/>}
+                                control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"
                             />
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{mt: 3, mb: 2}}
+                                sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign In
                             </Button>
@@ -137,7 +137,7 @@ export default function SignIn() {
                             </Grid>
                         </Box>
                     </Box>
-                    <Copyright sx={{mt: 8, mb: 4}}/>
+                    <Copyright sx={{ mt: 8, mb: 4 }} />
                 </Container>
             </ThemeProvider>
         </div>

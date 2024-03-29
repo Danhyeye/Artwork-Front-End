@@ -74,14 +74,6 @@ const Editprofile = () => {
                     value={curUser?.username}
                     onChange={(e) => setCurUser({ ...curUser, username: e.target.value })}
                 />
-                <p>Password</p>
-                <TextField
-                    // label="Password"
-                    variant="outlined"
-                    sx={{ width: 700 }}
-                    value={curUser?.password}
-                    onChange={(e) => setCurUser({ ...curUser, password: e.target.value })}
-                />
 
 
                 <button className="edit" onClick={handleEditProfile} >

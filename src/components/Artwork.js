@@ -29,11 +29,16 @@ const Artwork = () => {
     useEffect(() => {
         (async () => {
             await ArtworksService.getArtwork(id).then((art) => {
-                if (art.id !== undefined)
-                    setThisArtwork(art)
+                if (art.id !== undefined) {
+                    setThisArtwork(art);
+                    window.scrollTo(0, 0); // Scroll to top when data is loaded
+                }
             });
         })();
-    }, []);
+    }, [id]);
+
+
+
 
     const user = useSelector((state) => state.users?.value);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -104,7 +109,7 @@ const Artwork = () => {
     const handleAddToCart = useCallback(async (artworkId, created_by) => {
         if (!user || !user.id) {
             handleClickOpen();
-            setAlertContent("Please log in to do it")
+            setAlertContent("Please log in to be able to perform this action")
             return;
         }
         if (carts.find(cart => cart.artworkId === artworkId)) {
@@ -158,7 +163,7 @@ const Artwork = () => {
     };
 
     console.log("thisArtwork", thisArtwork)
-    const [alertContent, setAlertContent] = useState("Vui lòng đăng nhập để có thể thực hiện chức năng này")
+    const [alertContent, setAlertContent] = useState("Please log in to be able to perform this action")
     return (
         <>
             <main className="pin-container" sx={{ height: '90vh' }}>
@@ -169,9 +174,8 @@ const Artwork = () => {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                        {"Add Artwork ?"}
+                        {"Add Artwork  ?"}
                     </DialogTitle>
-
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             {alertContent}
@@ -203,7 +207,7 @@ const Artwork = () => {
                                         sx={{ fontSize: 30, mr: 4, cursor: "pointer" }}
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            if (window.confirm("Are you sure you want to delete this artwork ?")) {
+                                            if (window.confirm("Are you sure you want to delete this artwork?")) {
                                                 dispatch(ArtworksThunk.deleteArtwork(thisArtwork.id)).then(() => {
                                                     dispatch(deleteArtwork(thisArtwork.id))
                                                     navigate("/")
@@ -263,7 +267,7 @@ const Artwork = () => {
                                             ></button>
                                         </div>
                                         <div className="add-comment">
-                                            <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
+                                            <Avatar {...stringAvatar(myComments?.first_name + " " + myComments?.last_name)}
                                                 sx={{
                                                     width: 40, height: 40, fontSize: 18,
                                                     m: 2
@@ -335,7 +339,7 @@ const Artwork = () => {
                 onClose={handleCloseAlert}
             >
                 <Alert onClose={handleCloseAlert} severity="warning">
-                    Bạn đã lưu Artwork này rồi!
+                    You have saved this Artwork!
                 </Alert>
             </Snackbar>
             <div className="other-artworks">

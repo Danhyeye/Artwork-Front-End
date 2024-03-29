@@ -1,28 +1,28 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import SearchIcon from '@mui/icons-material/Search';
 import '../styles/Header.css';
-import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../features/users/UsersSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../features/users/UsersSlice";
 import Box from "@mui/material/Box";
-import {Alert, Badge, Divider, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
+import { Alert, Badge, Divider, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
-import {Logout, PersonAdd, Settings} from "@mui/icons-material";
-import {TopicsThunk} from '../features/topics/TopicsThunk';
-import {ArtworksThunk} from '../features/artworks/ArtworksThunk';
+import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import { TopicsThunk } from '../features/topics/TopicsThunk';
+import { ArtworksThunk } from '../features/artworks/ArtworksThunk';
 import Snackbar from "@mui/material/Snackbar";
-import {NoticeService} from "../services/NoticeService";
+import { NoticeService } from "../services/NoticeService";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import {stringAvatar} from "../utils/string";
+import { stringAvatar } from "../utils/string";
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
-const Header = ({badgeCount}) => {
+const Header = ({ badgeCount }) => {
     const location = useLocation();
     const shouldShowHeader = !['/login', '/signup'].includes(location.pathname);
 
@@ -94,7 +94,7 @@ const Header = ({badgeCount}) => {
     return shouldShowHeader ? (<div className="navbar">
         <div className="logo-bar">
             <Link to={'/home'}>
-                <img className="logo" src="assets/images/logo.png" alt="logo"/>
+                <img className="logo" src="./assets/images/ACATSUKI.png" alt="logo" />
             </Link>
             <Link to={'/home'}>
                 <button className="home" alt="home">
@@ -108,7 +108,7 @@ const Header = ({badgeCount}) => {
             </Link>
         </div>
         <div className="search-bar">
-            <Stack spacing={2} sx={{width: 800, alignContent: 'center', p: 1.5}}>
+            <Stack spacing={2} sx={{ width: 800, alignContent: 'center', p: 1.5 }}>
                 <Autocomplete
                     freeSolo
                     id="free-solo-2-demo"
@@ -119,7 +119,7 @@ const Header = ({badgeCount}) => {
                     options={topics.map((topic) => topic.name)}
                     renderInput={(params) => (<TextField
                         {...params}
-                        label={<SearchIcon/>}
+                        label={<SearchIcon />}
                         InputProps={{
                             ...params.InputProps, type: 'search', sx: {
                                 borderRadius: 10,
@@ -130,10 +130,10 @@ const Header = ({badgeCount}) => {
             </Stack>
         </div>
         <div className="info">
-            <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center', marginRight: '10px'}}>
+            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', marginRight: '10px' }}>
                 <button className='btn-nofi'>
                     <Badge color="secondary" badgeContent={notices.length} showZero onClick={handleClickNotice}>
-                        <NotificationsActiveIcon/>
+                        <NotificationsActiveIcon />
                     </Badge>
                 </button>
                 <Menu
@@ -164,8 +164,8 @@ const Header = ({badgeCount}) => {
                             },
                         },
                     }}
-                    transformOrigin={{horizontal: 'right', vertical: 'top'}}
-                    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     {notices.length > 0 ? notices.map((notice) => (<>
                         <MenuItem onClick={handleCloseNotice}>
@@ -175,11 +175,11 @@ const Header = ({badgeCount}) => {
                                 {notice.content}
                             </div>
                         </MenuItem>
-                        <Divider/>
+                        <Divider />
                     </>)) : <>
                         <MenuItem onClick={handleCloseNotice}>
                             <ListItemIcon>
-                                <PersonAdd fontSize="small"/>
+                                <PersonAdd fontSize="small" />
                             </ListItemIcon>
                             Bạn chưa có thông báo nào
                         </MenuItem>
@@ -191,7 +191,7 @@ const Header = ({badgeCount}) => {
                         <Link to={isLogged ? "/admin" : "#"} onClick={handleCartClick}>
                             <button className='btn-chat'>
                                 <Badge color="secondary" showZero>
-                                    <AdminPanelSettingsIcon/>
+                                    <AdminPanelSettingsIcon />
                                 </Badge>
                             </button>
                         </Link>
@@ -201,7 +201,7 @@ const Header = ({badgeCount}) => {
                 <Link to={isLogged ? "/cart" : "#"} onClick={handleCartClick}>
                     <button className='btn-chat'>
                         <Badge color="secondary" showZero>
-                            <ShoppingBagIcon/>
+                            <ShoppingBagIcon />
                         </Badge>
                     </button>
                 </Link>
@@ -209,7 +209,7 @@ const Header = ({badgeCount}) => {
                 <Link to={isLogged ? "/orders" : "#"} onClick={handleOrdersClick}>
                     <button className='btn-chat'>
                         <Badge color="secondary" showZero>
-                            <SubscriptionsIcon/>
+                            <SubscriptionsIcon />
                         </Badge>
                     </button>
                 </Link>
@@ -222,9 +222,9 @@ const Header = ({badgeCount}) => {
                         aria-expanded={open ? 'true' : undefined}
                     >
                         <Avatar {...stringAvatar(user?.first_name + " " + user?.last_name)}
-                                sx={{
-                                    width: 40, height: 40, fontSize: 18, m: 2
-                                }}/>
+                            sx={{
+                                width: 40, height: 40, fontSize: 18, m: 2
+                            }} />
                     </IconButton>
                 </Tooltip> : <Link to={"/login"}>
                     <button className='login'>Login</button>
@@ -257,30 +257,30 @@ const Header = ({badgeCount}) => {
                             },
                         },
                     }}
-                    transformOrigin={{horizontal: 'right', vertical: 'top'}}
-                    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     <Box onClick={handleToProfile}>
                         <MenuItem onClick={handleClose}>'
-                            <Avatar/> {user.first_name + " " + user.last_name}
+                            <Avatar /> {user.first_name + " " + user.last_name}
                         </MenuItem>
                     </Box>
-                    <Divider/>
+                    <Divider />
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
-                            <PersonAdd fontSize="small"/>
+                            <PersonAdd fontSize="small" />
                         </ListItemIcon>
                         Add another account
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
-                            <Settings fontSize="small"/>
+                            <Settings fontSize="small" />
                         </ListItemIcon>
                         Settings
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
                         <ListItemIcon>
-                            <Logout fontSize="small"/>
+                            <Logout fontSize="small" />
                         </ListItemIcon>
                         Logout
                     </MenuItem>

@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 const FullScreenLoader = ({ isOpen }) => {
 
     return (
-        <Backdrop  open={isOpen}>
+        <Backdrop open={isOpen}>
             <CircularProgress color="inherit" />
         </Backdrop>
     );
