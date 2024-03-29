@@ -31,6 +31,9 @@ export default function PaymentForm({ order, onChangeOrder }) {
     const [cardNumber, setCardNumber] = React.useState('');
     const [cvv, setCvv] = React.useState('');
     const [expirationDate, setExpirationDate] = React.useState('');
+    const isFormFilled = () => {
+        return order.card_number && order.cvv && order.card_name && order.expiry_date;
+    };
 
     const handlePaymentTypeChange = (event) => {
         setPaymentType(event.target.value);
@@ -62,6 +65,8 @@ export default function PaymentForm({ order, onChangeOrder }) {
             onChangeOrder(prev => ({ ...prev, expiry_date: formattedValue }))
         }
     };
+
+
 
     return (
         <Stack spacing={{ xs: 3, sm: 6 }} useFlexGap>
@@ -211,8 +216,13 @@ export default function PaymentForm({ order, onChangeOrder }) {
                                     value={expirationDate}
                                     onChange={handleExpirationDateChange}
                                 />
+
                             </FormGrid>
+                            {!isFormFilled() &&
+                                <div style={{ color: 'red', marginTop: '10px' }}>Please fill in all required fields</div>
+                            }
                         </Box>
+
                     </Box>
 
                 </Box>

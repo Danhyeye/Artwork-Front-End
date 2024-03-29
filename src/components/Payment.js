@@ -53,6 +53,12 @@ function getStepContent(step, order, handleChangeOrder, totalMoney, tax) {
 }
 
 export default function Checkout() {
+    const isFormFilled = () => {
+        return order.first_name && order.last_name && order.address_line_1 && order.city && order.state && order.zip && order.country;
+    };
+    const isFormFilledd = () => {
+        return order.card_number && order.cvv && order.card_name && order.expiry_date;
+    }
     const [mode, setMode] = React.useState('light');
     const [showCustomTheme, setShowCustomTheme] = React.useState(true);
     const defaultTheme = createTheme({ palette: { mode } });
@@ -397,6 +403,8 @@ export default function Checkout() {
                                     <Button
                                         variant="contained"
                                         endIcon={<ChevronRightRoundedIcon />}
+                                        disabled={!isFormFilled()}
+
                                         onClick={() => handleNext()}
                                         sx={{
                                             width: { xs: '100%', sm: 'fit-content' },
